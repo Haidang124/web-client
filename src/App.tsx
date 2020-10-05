@@ -1,18 +1,19 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import Login from './components/Login';
-import AdminLayout from './layouts/Admin.js';
-import AuthLayout from './layouts/Auth.js';
-
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
+import AdminLayout from './layouts/Admin';
+import AuthLayout from './layouts/Auth';
 const App: React.FC = () => {
   return (
     <div>
       <BrowserRouter>
         <Switch>
-          <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
           <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
-          <Route path="/login" render={(props) => <Login />} />
+          <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
           <Redirect from="/" to="/admin/index" />
         </Switch>
       </BrowserRouter>
