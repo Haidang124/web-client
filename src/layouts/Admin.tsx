@@ -1,17 +1,17 @@
 import React, { ComponentType } from 'react';
-import { Route, Switch, Redirect, RouteComponentProps } from 'react-router-dom';
+import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
+// import AdminFooter from '../components/Footers/AdminFooter';
 import AdminNavbar from '../components/Navbars/AdminNavbar';
-import AdminFooter from '../components/Footers/AdminFooter';
 import Sidebar from '../components/Sidebar/Sidebar';
-
 import routes from '../routes';
+
 interface PropsRoute {
   path: string;
   name: string;
   icon: string;
   component: ComponentType;
-  layout: string; 
+  layout: string;
 }
 const getRoutes = (route: any) => {
   return route.map((prop: PropsRoute, key: number) => {
@@ -51,11 +51,11 @@ const Admin: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
       <Sidebar
         {...props}
         routes={routes}
-        // logo={{
-        //   innerLink: '/admin/index',
-        //   imgSrc: require('assets/img/brand/argon-react.png'),
-        //   imgAlt: '...',
-        // }}
+        logo={{
+          innerLink: '/admin/index',
+          imgSrc: require('../assets/img/brand/kahoot-logo.png'),
+          imgAlt: '...',
+        }}
       />
       {/* ref="mainContent" */}
       <div className="main-content">
@@ -68,7 +68,7 @@ const Admin: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
           <Redirect from="*" to="/admin/index" />
         </Switch>
         <Container fluid>
-          <AdminFooter />
+          {/* <AdminFooter /> */}
         </Container>
       </div>
     </>

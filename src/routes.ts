@@ -5,8 +5,15 @@ import Header from './components/Headers/Header';
 let routes = [
   {
     path: '/index',
-    name: 'Dashboard',
+    name: 'Home Page',
     icon: 'ni ni-tv-2 text-primary',
+    component: Header,
+    layout: '/admin',
+  },
+  {
+    path: '/game',
+    name: 'Game',
+    icon: 'ni ni-controller text-primary',
     component: Header,
     layout: '/admin',
   },
