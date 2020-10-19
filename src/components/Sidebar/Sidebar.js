@@ -1,41 +1,29 @@
-/*eslint-disable*/
-import React from 'react';
-import { NavLink as NavLinkRRD, Link } from 'react-router-dom';
 // nodejs library to set properties for components
 import { PropTypes } from 'prop-types';
-
+import React from 'react';
+import { Link, NavLink as NavLinkRRD } from 'react-router-dom';
 // reactstrap components
 import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
+  Col,
   Collapse,
-  DropdownMenu,
+  Container,
   DropdownItem,
-  UncontrolledDropdown,
+  DropdownMenu,
   DropdownToggle,
-  FormGroup,
   Form,
   Input,
+  InputGroup,
   InputGroupAddon,
   InputGroupText,
-  InputGroup,
   Media,
-  NavbarBrand,
+  Nav,
   Navbar,
+  NavbarBrand,
   NavItem,
   NavLink,
-  Nav,
-  Progress,
-  Table,
-  Container,
   Row,
-  Col,
+  UncontrolledDropdown,
 } from 'reactstrap';
-
-var ps;
 
 class Sidebar extends React.Component {
   state = {
@@ -63,6 +51,9 @@ class Sidebar extends React.Component {
   };
   // creates the links that appear in the left menu / Sidebar
   createLinks = (routes) => {
+    const pStyle = {
+      fontSize: '24px',
+    };
     return routes.map((prop, key) => {
       return (
         <NavItem key={key}>
@@ -71,7 +62,7 @@ class Sidebar extends React.Component {
             tag={NavLinkRRD}
             onClick={this.closeCollapse}
             activeClassName="active">
-            <i className={prop.icon} />
+            <i style={pStyle} className={prop.icon} />
             {prop.name}
           </NavLink>
         </NavItem>
@@ -79,7 +70,7 @@ class Sidebar extends React.Component {
     });
   };
   render() {
-    const { bgColor, routes, logo } = this.props;
+    const { routes, logo } = this.props;
     let navbarBrandProps;
     if (logo && logo.innerLink) {
       navbarBrandProps = {
@@ -135,10 +126,10 @@ class Sidebar extends React.Component {
               <DropdownToggle nav>
                 <Media className="align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
-                    {/* <img
+                    <img
                       alt="..."
-                      src={require("assets/img/theme/team-1-800x800.jpg")}
-                    /> */}
+                      src={require('../../assets/img/theme/team-1-800x800.jpg')}
+                    />
                   </span>
                 </Media>
               </DropdownToggle>
@@ -220,9 +211,9 @@ class Sidebar extends React.Component {
             {/* Divider */}
             <hr className="my-3" />
             {/* Heading */}
-            <h6 className="navbar-heading text-muted">Documentation</h6>
+            {/* <h6 className="navbar-heading text-muted">Documentation</h6> */}
             {/* Navigation */}
-            <Nav className="mb-md-3" navbar>
+            {/* <Nav className="mb-md-3" navbar>
               <NavItem>
                 <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/overview?ref=adr-admin-sidebar">
                   <i className="ni ni-spaceship" />
@@ -241,12 +232,12 @@ class Sidebar extends React.Component {
                   Components
                 </NavLink>
               </NavItem>
-            </Nav>
+            </Nav> */}
             <Nav className="mb-md-3" navbar>
               <NavItem className="active-pro active">
-                <NavLink href="https://www.creative-tim.com/product/argon-dashboard-pro-react?ref=adr-admin-sidebar">
+                <NavLink>
                   <i className="ni ni-spaceship" />
-                  Upgrade to PRO
+                  Sign out
                 </NavLink>
               </NavItem>
             </Nav>
@@ -262,18 +253,11 @@ Sidebar.defaultProps = {
 };
 
 Sidebar.propTypes = {
-  // links that will be displayed inside the component
   routes: PropTypes.arrayOf(PropTypes.object),
   logo: PropTypes.shape({
-    // innerLink is for links that will direct the user within the app
-    // it will be rendered as <Link to="...">...</Link> tag
     innerLink: PropTypes.string,
-    // outterLink is for links that will direct the user outside the app
-    // it will be rendered as simple <a href="...">...</a> tag
     outterLink: PropTypes.string,
-    // the image src of the logo
     imgSrc: PropTypes.string.isRequired,
-    // the alt for the img
     imgAlt: PropTypes.string.isRequired,
   }),
 };

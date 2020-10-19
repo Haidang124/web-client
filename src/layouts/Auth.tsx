@@ -1,9 +1,9 @@
-import React, { ComponentType } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import React, { ComponentType, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { Container, Row, Col } from 'reactstrap';
-import AuthNavbar from '../components/Navbars/AuthNavbar';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { Col, Container, Row } from 'reactstrap';
 import AuthFooter from '../components/Footers/AuthFooter';
+import AuthNavbar from '../components/Navbars/AuthNavbar';
 import routes from '../routes';
 
 interface PropsRoute {
@@ -29,13 +29,14 @@ const getRoutes = (route: any[]) => {
   });
 };
 const Auth: React.FC<RouteComponentProps> = () => {
-  // componentDidMount() {
-  //   console.log(this.props);
-  //   document.body.classList.add('bg-default');
-  // }
-  // componentWillUnmount() {
-  //   document.body.classList.remove('bg-default');
-  // }
+  useEffect(() => {
+    document.body.classList.add('bg-default');
+
+    // returned function will be called on component unmount
+    return () => {
+      document.body.classList.remove('bg-default');
+    };
+  }, []);
   return (
     <>
       <div className="main-content">
@@ -46,7 +47,7 @@ const Auth: React.FC<RouteComponentProps> = () => {
               <Row className="justify-content-center">
                 <Col lg="5" md="6">
                   <h1 className="text-white">Welcome!</h1>
-                  <p className="text-lead text-light">Hello Luu Hai Dang, quangtai</p>
+                  <p className="text-lead text-light">Hello Luu Hai Dang</p>
                 </Col>
               </Row>
             </div>

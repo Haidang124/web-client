@@ -6,6 +6,7 @@ import config from '../config';
 const axiosInstance = axios.create({
   baseURL: config.API_URL,
   responseType: 'json',
+  withCredentials: true,
 });
 
 const requestHandler = (request: any) => {
