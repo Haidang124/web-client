@@ -10,11 +10,9 @@ const axiosInstance = axios.create({
 });
 
 const requestHandler = (request: any) => {
-  let user = JSON.parse(localStorage.getItem('user') || '{}');
-  if (user) {
-    // Thêm token vào header nếu user vẫn tồn tại
-    request.headers['x-access-token'] = user.token;
-  }
+  // Thêm token vào header nếu user vẫn tồn tại
+  let valueToken = document.cookie.substring(6);
+  request.headers['x-access-token'] = valueToken;
   return request;
 };
 

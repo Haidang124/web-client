@@ -1,10 +1,11 @@
-import React, { ComponentType } from 'react';
+import React, { ComponentType, useEffect, useState } from 'react';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
 // import AdminFooter from '../components/Footers/AdminFooter';
 import AdminNavbar from '../components/Navbars/AdminNavbar';
 import Sidebar from '../components/Sidebar/Sidebar';
 import routes from '../routes';
+import { userService } from '../services/user/api';
 
 interface PropsRoute {
   path: string;
@@ -30,11 +31,13 @@ const getRoutes = (route: any) => {
 };
 
 const Admin: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
-  // componentDidUpdate(e) {
-  //   document.documentElement.scrollTop = 0;
-  //   document.scrollingElement.scrollTop = 0;
-  //   this.refs.mainContent.scrollTop = 0;
-  // }
+  const [isLogin, setIsLogin] = useState<boolean>();
+  useEffect(() => {
+    userService
+      .getUser()
+      .then((res) => setIsLogin(true))
+      .catch((error) => setIsLogin(false));
+  }, []);
   const getBrandText = (path: any) => {
     for (let i = 0; i < routes.length; i++) {
       if (
@@ -46,6 +49,9 @@ const Admin: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
     }
     return 'Brand';
   };
+  if (isLogin === false) {
+    return <Redirect to="/auth/login" />;
+  }
   return (
     <>
       <Sidebar
@@ -67,9 +73,7 @@ const Admin: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
           {getRoutes(routes)}
           <Redirect from="*" to="/admin/index" />
         </Switch>
-        <Container fluid>
-          {/* <AdminFooter /> */}
-        </Container>
+        <Container fluid>{/* <AdminFooter /> */}</Container>
       </div>
     </>
   );
