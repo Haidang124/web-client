@@ -1,10 +1,11 @@
-import React, { ComponentType, useEffect } from 'react';
+import React, { ComponentType, useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Col, Container, Row } from 'reactstrap';
 import AuthFooter from '../components/Footers/AuthFooter';
 import AuthNavbar from '../components/Navbars/AuthNavbar';
 import routes from '../routes';
+import { userService } from '../services/user/api';
 
 interface PropsRoute {
   path: string;
@@ -29,17 +30,24 @@ const getRoutes = (route: any[]) => {
   });
 };
 const Auth: React.FC<RouteComponentProps> = () => {
+  const [isLogin, setIsLogin] = useState<boolean>();
   useEffect(() => {
     document.body.classList.add('bg-default');
-
-    // returned function will be called on component unmount
+    userService
+      .getUser()
+      .then((res) => setIsLogin(true))
+      .catch((error) => setIsLogin(false));
     return () => {
       document.body.classList.remove('bg-default');
     };
   }, []);
+  if (isLogin === true) {
+    return <Redirect to="/admin/index" />;
+  }
   return (
     <>
       <div className="main-content">
+        {/* <Loading /> */}
         <AuthNavbar />
         <div className="header bg-gradient-info py-7 py-lg-8">
           <Container>

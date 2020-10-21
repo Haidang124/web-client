@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { userService } from '../../services/user/api';
 // reactstrap components
 import {
   Container,
@@ -78,7 +79,7 @@ const AdminNavbar: React.FC<any> = (props: any) => {
                   <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+                <DropdownItem href="auth/login" onClick={(e) => userService.logOut()}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>

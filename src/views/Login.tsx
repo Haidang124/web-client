@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 import {
   Button,
@@ -12,19 +13,26 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  Row,
+  Row
 } from 'reactstrap';
 import { userService } from '../services/user/api';
 
 const Login: React.FC = () => {
   let dataLogin = {};
+  let history = useHistory();
+  const handleClick = () => {
+    history.push('/admin/index');
+  };
   const handleChange = (event) => {
     dataLogin[event.target.type] = event.target.value;
   };
   const postData = () => {
     userService
       .login(dataLogin)
-      .then((res) => toast.success(res.data.message))
+      .then((res) => {
+        toast.success(res.data.message);
+        handleClick();
+      })
       .catch((error) => toast.error(error.response.data.error));
   };
   return (
