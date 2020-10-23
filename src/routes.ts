@@ -2,6 +2,10 @@ import Profile from './views/Profile';
 import Register from './views/Register';
 import Login from './views/Login';
 import Header from './components/Headers/Header';
+import ChangePassword from './views/ChangePassword';
+import Game from './views/Game';
+import PlayGame from './views/PlayGame';
+import ListGame from './views/ListGame';
 let routes = [
   {
     path: '/index',
@@ -14,7 +18,7 @@ let routes = [
     path: '/game',
     name: 'Game',
     icon: 'ni ni-controller text-primary',
-    component: Header,
+    component: Game,
     layout: '/admin',
   },
   {
@@ -22,6 +26,13 @@ let routes = [
     name: 'User Profile',
     icon: 'ni ni-single-02 text-yellow',
     component: Profile,
+    layout: '/admin',
+  },
+  {
+    path: '/changePassword',
+    name: 'Change Password',
+    icon: 'ni ni-key-25 text-info',
+    component: ChangePassword,
     layout: '/admin',
   },
   {
@@ -38,5 +49,21 @@ let routes = [
     component: Register,
     layout: '/auth',
   },
+  {
+    path: '/play-game',
+    name: 'Play Game',
+    icon: 'ni ni-controller text-primary',
+    component: PlayGame,
+    layout: '/admin',
+  },
+  {
+    path: '/list-game',
+    name: 'List Game',
+    icon: 'ni ni-controller text-primary',
+    component: ListGame,
+    layout: '/admin',
+  },
+
+  
 ];
 export default routes;

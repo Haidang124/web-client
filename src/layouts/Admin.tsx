@@ -49,6 +49,15 @@ const Admin: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
     }
     return 'Brand';
   };
+  const checkMainContent = (name) => {
+    const arrayList = ["Game", "Play Game", "List Game"]; 
+    for(let i= 0; i< arrayList.length; i++) {
+      if(name === arrayList[i])  {
+        return true;
+      }
+    }
+    return false;
+  }
   if (isLogin === false) {
     return <Redirect to="/auth/login" />;
   }
@@ -56,7 +65,7 @@ const Admin: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
     <>
       <Sidebar
         {...props}
-        routes={routes}
+        routes={[routes[0], routes[1], routes[2], routes[3]]}
         logo={{
           innerLink: '/admin/index',
           imgSrc: require('../assets/img/brand/kahoot-logo.png'),
@@ -64,16 +73,32 @@ const Admin: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
         }}
       />
       {/* ref="mainContent" */}
-      <div className="main-content">
-        <AdminNavbar
+      <div className="main-content" >
+        { (()=> {
+              if(checkMainContent(getBrandText(props.location.pathname))) {
+                return (
+                  <></>
+                );
+              } else {
+                return (
+                  <AdminNavbar
+                    {...props}
+                    brandText={getBrandText(props.location.pathname)}
+                  />
+                )
+              }
+          })()
+        }
+        {/* <AdminNavbar
           {...props}
           brandText={getBrandText(props.location.pathname)}
-        />
+        /> */}
         <Switch>
           {getRoutes(routes)}
           <Redirect from="*" to="/admin/index" />
         </Switch>
-        <Container fluid>{/* <AdminFooter /> */}</Container>
+        <Container fluid></Container>
+        {/* <Container fluid><AdminFooter /></Container> */}
       </div>
     </>
   );
