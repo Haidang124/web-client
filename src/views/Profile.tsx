@@ -1,4 +1,7 @@
-import React from 'react';
+import { render } from '@testing-library/react';
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+
 // reactstrap components
 import {
   Button,
@@ -13,8 +16,76 @@ import {
   Row,
 } from 'reactstrap';
 import UserHeader from '../components/Headers/UserHeader';
+import { userService } from '../services/user/api';
 
 const Profile: React.FC = () => {
+  const [dataUser, setDataUser] = useState({
+    role: '',
+    username: '',
+    avatar: '',
+    language: '',
+    email: '',
+    birthday: '',
+  });
+  const [buttonEdit, setTrangThai] = useState({
+    trangThai: true,
+    tenTrangThai: 'Edit Profile',
+    color_trangThai: '',
+  });
+  let dataUpdate = {
+    newUsername: dataUser.username,
+    newAvatar: dataUser.avatar,
+    newLanguage: dataUser.language,
+    newBirthday: dataUser.birthday,
+  };
+
+  useEffect(() => {
+    userService.getUserInfo().then((response) =>
+      Promise.resolve({
+        data: JSON.parse(JSON.stringify(response.data.data)),
+      }).then((post) => {
+        setDataUser(post.data);
+        // console.log(post.data);
+      }),
+    );
+  }, []);
+
+  const postUpdateDataUser = () => {
+    userService
+      .updateUser(dataUpdate)
+      .then((res) => {
+        toast.success(res.data.message);
+        setDataUser({
+          role: dataUser.role,
+          username: dataUpdate.newUsername,
+          avatar: dataUpdate.newAvatar,
+          language: dataUpdate.newLanguage,
+          email: dataUser.email,
+          birthday: dataUpdate.newBirthday,
+        });
+      })
+      .catch((error) => toast.error(error.response.data.error));
+  };
+
+  const changeButtonEdit = () => {
+    if (buttonEdit.tenTrangThai === 'Save') {
+      postUpdateDataUser();
+    }
+    setTrangThai({
+      trangThai: !buttonEdit.trangThai,
+      tenTrangThai:
+        buttonEdit.tenTrangThai === 'Edit Profile' ? 'Save' : 'Edit Profile',
+      color_trangThai:
+        buttonEdit.tenTrangThai === 'Edit Profile' ? 'btn btn-danger' : '',
+    });
+  };
+  const getFieldUpdate = (event) => {
+    if (buttonEdit.tenTrangThai === 'Save') {
+      dataUpdate['new' + event.target.name] = event.target.value;
+      console.log(dataUpdate);
+    }
+  };
+
   return (
     <>
       <UserHeader />
@@ -30,7 +101,7 @@ const Profile: React.FC = () => {
                       <img
                         alt="..."
                         className="rounded-circle"
-                        src="https://randomuser.me/api/portraits/men/46.jpg"
+                        src={dataUser.avatar}
                       />
                     </a>
                   </div>
@@ -77,26 +148,28 @@ const Profile: React.FC = () => {
                 </Row>
                 <div className="text-center">
                   <h3>
-                    Jessica Jones
-                    <span className="font-weight-light">, 27</span>
+                    {dataUser.username}
+                    <span className="font-weight-light">
+                      ,{' '}
+                      {new Date().getFullYear() -
+                        Number(dataUser.birthday.split('-')[0])}
+                    </span>
                   </h3>
                   <div className="h5 font-weight-300">
                     <i className="ni location_pin mr-2" />
-                    Bucharest, Romania
+                    Cầu Giấy, Hà Nội
                   </div>
                   <div className="h5 mt-4">
                     <i className="ni business_briefcase-24 mr-2" />
-                    Solution Manager - Hai Dang Officer
+                    {dataUser.role === 'member' ? 'Student' : 'Teacher'}
                   </div>
                   <div>
                     <i className="ni education_hat mr-2" />
-                    University of Computer Science
+                    Đại học Công Nghệ - Đại học Quốc Gia Hà Nội
                   </div>
                   <hr className="my-4" />
                   <p>
-                    Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                    Nick Murphy — writes, performs and records all of his own
-                    music.
+                    Học làm chi, thi làm gì. Tú Xương còn rớt,huống chi là mình
                   </p>
                   <a href="#pablo" onClick={(e) => e.preventDefault()}>
                     Show more
@@ -114,11 +187,11 @@ const Profile: React.FC = () => {
                   </Col>
                   <Col className="text-right" xs="4">
                     <Button
+                      className={buttonEdit.color_trangThai}
                       color="primary"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={(e) => changeButtonEdit()}
                       size="sm">
-                      Settings
+                      {buttonEdit.tenTrangThai}
                     </Button>
                   </Col>
                 </Row>
@@ -139,10 +212,12 @@ const Profile: React.FC = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="lucky.jesse"
+                            defaultValue={dataUser.username}
                             id="input-username"
-                            placeholder="Username"
                             type="text"
+                            disabled={buttonEdit.trangThai}
+                            name="Username"
+                            onChange={(e) => getFieldUpdate(e)}
                           />
                         </FormGroup>
                       </Col>
@@ -155,54 +230,15 @@ const Profile: React.FC = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
+                            name="Email"
                             id="input-email"
-                            placeholder="jesse@example.com"
+                            defaultValue={dataUser.email}
                             type="email"
+                            disabled={true}
                           />
                         </FormGroup>
                       </Col>
                     </Row>
-                    <Row>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-first-name">
-                            First name
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Lucky"
-                            id="input-first-name"
-                            placeholder="First name"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-last-name">
-                            Last name
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Jesse"
-                            id="input-last-name"
-                            placeholder="Last name"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                  </div>
-                  <hr className="my-4" />
-                  {/* Address */}
-                  <h6 className="heading-small text-muted mb-4">
-                    Contact information
-                  </h6>
-                  <div className="pl-lg-4">
                     <Row>
                       <Col md="12">
                         <FormGroup>
@@ -213,64 +249,87 @@ const Profile: React.FC = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                            name="Address"
+                            value="144 Xuân Thủy, Cầu Giấy, Hà Nội"
                             id="input-address"
-                            placeholder="Home Address"
                             type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col lg="4">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-city">
-                            City
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="New York"
-                            id="input-city"
-                            placeholder="City"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="4">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-country">
-                            Country
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="United States"
-                            id="input-country"
-                            placeholder="Country"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="4">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-country">
-                            Postal code
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-postal-code"
-                            placeholder="Postal code"
-                            type="number"
+                            disabled={buttonEdit.trangThai}
                           />
                         </FormGroup>
                       </Col>
                     </Row>
                   </div>
+
+                  <hr className="my-4" />
+                  {/* Birthday */}
+                  <h6 className="heading-small text-muted mb-4">Birthday</h6>
+                  <div className="pl-lg-4">
+                    <Row>
+                      <Col md="12">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-birthday">
+                            Date
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            defaultValue={dataUser.birthday}
+                            id="input-birthday"
+                            type="date"
+                            disabled={buttonEdit.trangThai}
+                            onChange={(e) => getFieldUpdate(e)}
+                            name="Birthday"
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                  </div>
+                  <hr className="my-4" />
+                  {/* Address */}
+                  <h6 className="heading-small text-muted mb-4">Language</h6>
+                  <div className="pl-lg-4">
+                    <Row>
+                      <Col lg="12">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-country">
+                            Language
+                          </label>
+
+                          <select
+                            className="browser-default custom-select"
+                            name="Language"
+                            disabled={buttonEdit.trangThai}
+                            onChange={(e) => getFieldUpdate(e)}>
+                            {(() => {
+                              if (dataUser.language === 'vi') {
+                                return (
+                                  <>
+                                    <option value="vi" selected>
+                                      Vietnamese
+                                    </option>
+                                    <option value="en">English</option>
+                                  </>
+                                );
+                              } else {
+                                return (
+                                  <>
+                                    <option value="vi">Vietnamese</option>
+                                    <option value="en" selected>
+                                      English
+                                    </option>
+                                  </>
+                                );
+                              }
+                            })()}
+                          </select>
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                  </div>
+
                   <hr className="my-4" />
                   {/* Description */}
                   <h6 className="heading-small text-muted mb-4">About me</h6>
@@ -279,11 +338,11 @@ const Profile: React.FC = () => {
                       <label>About Me</label>
                       <Input
                         className="form-control-alternative"
+                        name="About"
                         placeholder="A few words about you ..."
                         rows="4"
-                        defaultValue="A beautiful Dashboard for Bootstrap 4. It is Free and
-                          Open Source."
                         type="textarea"
+                        disabled={buttonEdit.trangThai}
                       />
                     </FormGroup>
                   </div>

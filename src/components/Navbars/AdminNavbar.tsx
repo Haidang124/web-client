@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { userService } from '../../services/user/api';
+
 // reactstrap components
 import {
   Container,
@@ -19,9 +21,26 @@ import {
 } from 'reactstrap';
 
 const AdminNavbar: React.FC<any> = (props: any) => {
+  const [dataUser, setDataUser] = useState({
+    username: '',
+    avatar: '',
+  });
+  useEffect(() => {
+    userService.getUserInfo().then((response) =>
+      Promise.resolve({
+        data: JSON.stringify(response.data.data),
+      }).then((post) => {
+        setDataUser(JSON.parse(post.data));
+      }),
+    );
+  }, []);
   return (
     <>
-      <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
+      <Navbar
+        className="navbar-top navbar-dark"
+        expand="md"
+        id="navbar-main"
+        style={{ backgroundColor: 'rgb(70,23,143)' }}>
         <Container fluid>
           <Link
             className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
@@ -45,14 +64,11 @@ const AdminNavbar: React.FC<any> = (props: any) => {
               <DropdownToggle className="pr-0" nav>
                 <Media className="align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
-                    <img
-                        alt="..."
-                        src="https://randomuser.me/api/portraits/men/46.jpg"
-                      />
+                    <img alt="..." src={dataUser.avatar} />
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Jessica Jones
+                      {dataUser.username}
                     </span>
                   </Media>
                 </Media>
@@ -78,7 +94,9 @@ const AdminNavbar: React.FC<any> = (props: any) => {
                   <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+                <DropdownItem
+                  href="auth/logout"
+                  onClick={(e) => userService.logOut()}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>

@@ -78,7 +78,7 @@ const Register: React.FC = () => {
                   </InputGroupAddon>
                   <Input
                     placeholder="Name"
-                    name="name"
+                    name="username"
                     type="text"
                     onChange={handleChange}
                   />
