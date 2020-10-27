@@ -2,6 +2,7 @@ import Profile from './views/Profile';
 import Register from './views/Register';
 import Login from './views/Login';
 import Header from './components/Headers/Header';
+import ChangePassword from './views/ChangePassword';
 let routes = [
   {
     path: '/index',
@@ -25,6 +26,13 @@ let routes = [
     layout: '/admin',
   },
   {
+    path: '/changePassword',
+    name: 'Change Password',
+    icon: 'ni ni-key-25 text-info',
+    component: ChangePassword,
+    layout: '/admin',
+  },
+  {
     path: '/login',
     name: 'Login',
     icon: 'ni ni-key-25 text-info',
@@ -38,5 +46,6 @@ let routes = [
     component: Register,
     layout: '/auth',
   },
+  
 ];
 export default routes;
