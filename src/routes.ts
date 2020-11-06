@@ -6,6 +6,8 @@ import ChangePassword from './views/ChangePassword';
 import Game from './views/Game';
 import PlayGame from './views/PlayGame';
 import ListGame from './views/ListGame';
+import TestModal from './views/TestModal';
+
 let routes = [
   {
     path: '/index',
@@ -63,7 +65,13 @@ let routes = [
     component: ListGame,
     layout: '/admin',
   },
-
+  {
+    path: '/testmodal',
+    name: 'Test Modal',
+    icon: 'ni ni-controller text-primary',
+    component: TestModal,
+    layout: '/admin',
+  },
   
 ];
 export default routes;

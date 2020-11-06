@@ -50,7 +50,7 @@ const Admin: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
     return 'Brand';
   };
   const checkMainContent = (name) => {
-    const arrayList = ["Game", "Play Game", "List Game"]; 
+    const arrayList = ["Home Page", "User Profile","Change Password"]; 
     for(let i= 0; i< arrayList.length; i++) {
       if(name === arrayList[i])  {
         return true;
@@ -77,14 +77,14 @@ const Admin: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
         { (()=> {
               if(checkMainContent(getBrandText(props.location.pathname))) {
                 return (
-                  <></>
-                );
-              } else {
-                return (
                   <AdminNavbar
                     {...props}
                     brandText={getBrandText(props.location.pathname)}
                   />
+                );
+              } else {
+                return (
+                  <></>
                 )
               }
           })()
