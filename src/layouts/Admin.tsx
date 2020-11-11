@@ -49,6 +49,16 @@ const Admin: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
     }
     return 'Brand';
   };
+  //
+  const checkMainContent = (name) => {
+    const arrayList = ['Home Page', 'User Profile', 'Change Password', 'Blog'];
+    for (let i = 0; i < arrayList.length; i++) {
+      if (name === arrayList[i]) {
+        return true;
+      }
+    }
+    return false;
+  };
   if (isLogin === false) {
     return <Redirect to="/auth/login" />;
   }
@@ -65,10 +75,22 @@ const Admin: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
       />
       {/* ref="mainContent" */}
       <div className="main-content">
-        <AdminNavbar
+        {(() => {
+          if (checkMainContent(getBrandText(props.location.pathname))) {
+            return (
+              <AdminNavbar
+                {...props}
+                brandText={getBrandText(props.location.pathname)}
+              />
+            );
+          } else {
+            return <></>;
+          }
+        })()}
+        {/* <AdminNavbar
           {...props}
           brandText={getBrandText(props.location.pathname)}
-        />
+        /> */}
         <Switch>
           {getRoutes(routes)}
           <Redirect from="*" to="/admin/index" />

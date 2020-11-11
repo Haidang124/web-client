@@ -3,6 +3,9 @@ import Register from './views/Register';
 import Login from './views/Login';
 import Header from './components/Headers/Header';
 import ChangePassword from './views/ChangePassword';
+import Game from './views/Game';
+import CreateGame from './views/CreateGame';
+import Blog from './views/Blog';
 let routes = [
   {
     path: '/index',
@@ -15,7 +18,7 @@ let routes = [
     path: '/game',
     name: 'Game',
     icon: 'ni ni-controller text-primary',
-    component: Header,
+    component: Game,
     layout: '/admin',
   },
   {
@@ -45,6 +48,20 @@ let routes = [
     icon: 'ni ni-circle-08 text-pink',
     component: Register,
     layout: '/auth',
+  },
+  {
+    path: '/create-game',
+    name: 'Create Game',
+    icon: 'ni ni-controller text-primary',
+    component: CreateGame,
+    layout: '/admin',
+  },
+  {
+    path: '/blog/:title/:id',
+    name: 'Blog',
+    icon: 'ni ni-controller text-primary',
+    component: Blog,
+    layout: '/admin',
   },
   
 ];

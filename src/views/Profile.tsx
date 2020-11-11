@@ -14,24 +14,23 @@ import {
   FormGroup,
   Input,
   Row,
-  
 } from 'reactstrap';
 import UserHeader from '../components/Headers/UserHeader';
-import {userService} from '../services/user/api';
+import { userService } from '../services/user/api';
 
 const Profile: React.FC = () => {
   const [dataUser, setDataUser] = useState({
-      role:"",
-      username: "",
-      avatar: "",
-      language:"",
-      email:"",
-      birthday:"",
+    role: '',
+    username: '',
+    avatar: '',
+    language: '',
+    email: '',
+    birthday: '',
   });
   const [buttonEdit, setTrangThai] = useState({
     trangThai: true,
-    tenTrangThai: "Edit Profile",
-    color_trangThai: ""
+    tenTrangThai: 'Edit Profile',
+    color_trangThai: '',
   });
   let dataUpdate = {
     newUsername: dataUser.username,
@@ -40,19 +39,16 @@ const Profile: React.FC = () => {
     newBirthday: dataUser.birthday,
   };
 
-  useEffect( () => {
-    userService
-      .getUserInfo()
-      .then((response) =>
-        Promise.resolve({
-          data: JSON.parse(JSON.stringify(response.data.data)),
-        })
-      .then((post) => {
+  useEffect(() => {
+    userService.getUserInfo().then((response) =>
+      Promise.resolve({
+        data: JSON.parse(JSON.stringify(response.data.data)),
+      }).then((post) => {
         setDataUser(post.data);
         // console.log(post.data);
-      })
+      }),
     );
-  },[]);
+  }, []);
 
   const postUpdateDataUser = () => {
     userService
@@ -65,29 +61,30 @@ const Profile: React.FC = () => {
           avatar: dataUpdate.newAvatar,
           language: dataUpdate.newLanguage,
           email: dataUser.email,
-          birthday:dataUpdate.newBirthday,
+          birthday: dataUpdate.newBirthday,
         });
       })
       .catch((error) => toast.error(error.response.data.error));
-    
   };
 
   const changeButtonEdit = () => {
-    if(buttonEdit.tenTrangThai === "Save")  {
+    if (buttonEdit.tenTrangThai === 'Save') {
       postUpdateDataUser();
     }
     setTrangThai({
       trangThai: !buttonEdit.trangThai,
-      tenTrangThai: buttonEdit.tenTrangThai==="Edit Profile"? "Save":"Edit Profile",
-      color_trangThai: buttonEdit.tenTrangThai==="Edit Profile"?"btn btn-danger":""
+      tenTrangThai:
+        buttonEdit.tenTrangThai === 'Edit Profile' ? 'Save' : 'Edit Profile',
+      color_trangThai:
+        buttonEdit.tenTrangThai === 'Edit Profile' ? 'btn btn-danger' : '',
     });
-  }
+  };
   const getFieldUpdate = (event) => {
-    if(buttonEdit.tenTrangThai === "Save") {
-      dataUpdate["new"+event.target.name] = event.target.value;
+    if (buttonEdit.tenTrangThai === 'Save') {
+      dataUpdate['new' + event.target.name] = event.target.value;
       console.log(dataUpdate);
     }
-  }
+  };
 
   return (
     <>
@@ -104,7 +101,7 @@ const Profile: React.FC = () => {
                       <img
                         alt="..."
                         className="rounded-circle"
-                        src="https://randomuser.me/api/portraits/men/46.jpg"
+                        src={dataUser.avatar}
                       />
                     </a>
                   </div>
@@ -152,7 +149,11 @@ const Profile: React.FC = () => {
                 <div className="text-center">
                   <h3>
                     {dataUser.username}
-                    <span className="font-weight-light">, {(new Date()).getFullYear() - Number(dataUser.birthday.split("-")[0])}</span>
+                    <span className="font-weight-light">
+                      ,{' '}
+                      {new Date().getFullYear() -
+                        Number(dataUser.birthday.split('-')[0])}
+                    </span>
                   </h3>
                   <div className="h5 font-weight-300">
                     <i className="ni location_pin mr-2" />
@@ -160,7 +161,7 @@ const Profile: React.FC = () => {
                   </div>
                   <div className="h5 mt-4">
                     <i className="ni business_briefcase-24 mr-2" />
-                    {dataUser.role === "member"? "Student":"Teacher"}
+                    {dataUser.role === 'member' ? 'Student' : 'Teacher'}
                   </div>
                   <div>
                     <i className="ni education_hat mr-2" />
@@ -168,7 +169,7 @@ const Profile: React.FC = () => {
                   </div>
                   <hr className="my-4" />
                   <p>
-                  Học làm chi, thi làm gì. Tú Xương còn rớt,huống chi là mình
+                    Học làm chi, thi làm gì. Tú Xương còn rớt,huống chi là mình
                   </p>
                   <a href="#pablo" onClick={(e) => e.preventDefault()}>
                     Show more
@@ -211,10 +212,10 @@ const Profile: React.FC = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue = {dataUser.username}
+                            defaultValue={dataUser.username}
                             id="input-username"
                             type="text"
-                            disabled = {buttonEdit.trangThai}
+                            disabled={buttonEdit.trangThai}
                             name="Username"
                             onChange={(e) => getFieldUpdate(e)}
                           />
@@ -231,9 +232,9 @@ const Profile: React.FC = () => {
                             className="form-control-alternative"
                             name="Email"
                             id="input-email"
-                            defaultValue = {dataUser.email}
+                            defaultValue={dataUser.email}
                             type="email"
-                            disabled = {true}
+                            disabled={true}
                           />
                         </FormGroup>
                       </Col>
@@ -252,7 +253,7 @@ const Profile: React.FC = () => {
                             value="144 Xuân Thủy, Cầu Giấy, Hà Nội"
                             id="input-address"
                             type="text"
-                            disabled = {buttonEdit.trangThai}
+                            disabled={buttonEdit.trangThai}
                           />
                         </FormGroup>
                       </Col>
@@ -261,9 +262,7 @@ const Profile: React.FC = () => {
 
                   <hr className="my-4" />
                   {/* Birthday */}
-                  <h6 className="heading-small text-muted mb-4">
-                    Birthday
-                  </h6>
+                  <h6 className="heading-small text-muted mb-4">Birthday</h6>
                   <div className="pl-lg-4">
                     <Row>
                       <Col md="12">
@@ -271,15 +270,15 @@ const Profile: React.FC = () => {
                           <label
                             className="form-control-label"
                             htmlFor="input-birthday">
-                              Date
+                            Date
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue = {dataUser.birthday}
+                            defaultValue={dataUser.birthday}
                             id="input-birthday"
                             type="date"
-                            disabled = {buttonEdit.trangThai}
-                            onChange={(e)=>getFieldUpdate(e)}
+                            disabled={buttonEdit.trangThai}
+                            onChange={(e) => getFieldUpdate(e)}
                             name="Birthday"
                           />
                         </FormGroup>
@@ -288,45 +287,45 @@ const Profile: React.FC = () => {
                   </div>
                   <hr className="my-4" />
                   {/* Address */}
-                  <h6 className="heading-small text-muted mb-4">
-                    Language
-                  </h6>
+                  <h6 className="heading-small text-muted mb-4">Language</h6>
                   <div className="pl-lg-4">
                     <Row>
                       <Col lg="12">
                         <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-country">
-                                Language
-                            </label>
-                            
-                            <select className="browser-default custom-select" 
-                                    name="Language"
-                                    disabled={buttonEdit.trangThai}
-                                    onChange={(e)=>getFieldUpdate(e)}>
-                              {(()=> {
-                                if(dataUser.language === "vi"){
-                                  return (
-                                    <>
-                                      <option value="vi" selected>Vietnamese</option>
-                                      <option value="en" >English</option>
-                                    </>
-                                  );
-                                }
-                                else {
-                                  return (
-                                    <>
-                                      <option value="vi" >Vietnamese</option>
-                                      <option value="en" selected>English</option>
-                                    </>
-                                  );
-                                }
-                              })()}
-                              
-                            </select>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-country">
+                            Language
+                          </label>
 
-                          </FormGroup>
+                          <select
+                            className="browser-default custom-select"
+                            name="Language"
+                            disabled={buttonEdit.trangThai}
+                            onChange={(e) => getFieldUpdate(e)}>
+                            {(() => {
+                              if (dataUser.language === 'vi') {
+                                return (
+                                  <>
+                                    <option value="vi" selected>
+                                      Vietnamese
+                                    </option>
+                                    <option value="en">English</option>
+                                  </>
+                                );
+                              } else {
+                                return (
+                                  <>
+                                    <option value="vi">Vietnamese</option>
+                                    <option value="en" selected>
+                                      English
+                                    </option>
+                                  </>
+                                );
+                              }
+                            })()}
+                          </select>
+                        </FormGroup>
                       </Col>
                     </Row>
                   </div>
@@ -343,7 +342,7 @@ const Profile: React.FC = () => {
                         placeholder="A few words about you ..."
                         rows="4"
                         type="textarea"
-                        disabled = {buttonEdit.trangThai} 
+                        disabled={buttonEdit.trangThai}
                       />
                     </FormGroup>
                   </div>
