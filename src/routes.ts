@@ -1,11 +1,13 @@
+import Header from './components/Headers/Header';
+import Blog from './views/Blog';
+import ChangePassword from './views/ChangePassword';
+import CreateGame from './views/CreateGame';
+import Discover from './views/Discover';
+import Game from './views/Game';
+import GameUI from './views/GameUi';
+import Login from './views/Login';
 import Profile from './views/Profile';
 import Register from './views/Register';
-import Login from './views/Login';
-import Header from './components/Headers/Header';
-import ChangePassword from './views/ChangePassword';
-import Game from './views/Game';
-import CreateGame from './views/CreateGame';
-import Blog from './views/Blog';
 let routes = [
   {
     path: '/index',
@@ -15,10 +17,24 @@ let routes = [
     layout: '/admin',
   },
   {
+    path: '/discover',
+    name: 'Discover Page',
+    icon: 'ni ni-atom text-primary',
+    component: Discover,
+    layout: '/admin',
+  },
+  {
     path: '/game',
     name: 'Game',
     icon: 'ni ni-controller text-primary',
     component: Game,
+    layout: '/admin',
+  },
+  {
+    path: '/gameUi',
+    name: 'GameUi',
+    icon: 'ni ni-controller text-primary',
+    component: GameUI,
     layout: '/admin',
   },
   {
@@ -63,6 +79,5 @@ let routes = [
     component: Blog,
     layout: '/admin',
   },
-  
 ];
 export default routes;

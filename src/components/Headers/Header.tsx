@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
 // reactstrap components
 import { Card, CardBody, CardTitle, Col, Container, Row } from 'reactstrap';
-import { userService } from '../../services/user/api';
 import dataWhatNew from '../../assets/data/dataBlog.json';
-import { title } from 'process';
 import dataTopPick from '../../assets/data/dataTopPicks.json';
+import { userService } from '../../services/user/api';
 
 const Header: React.FC = () => {
   const [dataUser, setDataUser] = useState({
@@ -60,7 +58,7 @@ const Header: React.FC = () => {
                           </p>
                         </Col>
                         <Col lg="6" xl="6">
-                          <a href="#">
+                          <a href="/">
                             <p
                               style={{
                                 fontSize: '15px',
@@ -159,7 +157,8 @@ const Header: React.FC = () => {
                               }}>
                               <div className="col-lg-2">
                                 <img
-                                  src={value['imgIcon']}
+                                  src={value.imgIcon}
+                                  alt=""
                                   style={{
                                     borderRadius: '5px',
                                     width: '60px',
@@ -172,7 +171,7 @@ const Header: React.FC = () => {
                                   <a
                                     href={
                                       '/admin/blog/' +
-                                      value['title'] +
+                                      value.title +
                                       '/' +
                                       key
                                     }
@@ -181,7 +180,7 @@ const Header: React.FC = () => {
                                       color: 'black',
                                       fontWeight: 'bold',
                                     }}>
-                                    {value['title']}
+                                    {value.title}
                                   </a>
                                 </span>
                                 <br />
@@ -193,7 +192,7 @@ const Header: React.FC = () => {
                                     whiteSpace: 'nowrap',
                                     textOverflow: 'ellipsis',
                                   }}>
-                                  {value['describe']}
+                                  {value.describe}
                                 </span>
                               </div>
                             </div>
@@ -202,7 +201,7 @@ const Header: React.FC = () => {
                         );
                       })}
                       <div className="text-center">
-                        <a href="#" style={{ fontWeight: 'bold' }}>
+                        <a href="/" style={{ fontWeight: 'bold' }}>
                           <u>Show more</u>
                         </a>
                       </div>
@@ -217,7 +216,7 @@ const Header: React.FC = () => {
                       <div className="col">
                         <CardTitle tag="h2" className="mb-0">
                           <a
-                            href="#"
+                            href="/"
                             style={{
                               color: 'black',
                               borderBottom: '3px solid rgb(19,104,206)',
@@ -232,12 +231,12 @@ const Header: React.FC = () => {
                         return (
                           <>
                             {/* One Temp */}
-                            <a href="#">
+                            <a href="/">
                               <div className="row mb-3">
                                 <div className="col-lg-4 col-md-4 col-sm-3">
                                   <img
                                     style={{ borderRadius: '5px' }}
-                                    src={value['imgIcon']}
+                                    src={value.imgIcon}
                                     width="120px"
                                     height="80px"
                                     alt=""
@@ -251,7 +250,7 @@ const Header: React.FC = () => {
                                         fontWeight: 'bold',
                                         color: 'black',
                                       }}>
-                                      {value['title']}
+                                      {value.title}
                                     </CardTitle>
                                     <CardBody
                                       style={{
@@ -261,12 +260,12 @@ const Header: React.FC = () => {
                                       }}>
                                       <div className="row">
                                         <div className="col-8">
-                                          {value['describe']}
+                                          {value.describe}
                                         </div>
                                         <div
                                           className="col-4"
                                           style={{ fontWeight: 'bold' }}>
-                                          {value['plays']}
+                                          {value.plays}
                                         </div>
                                       </div>
                                     </CardBody>
@@ -380,7 +379,7 @@ const Header: React.FC = () => {
                       return (
                         <>
                           {/* One Temp */}
-                          <a href="">
+                          <a href="/">
                             <div className="mt-3 mb-0 text-sm">
                               <Row
                                 style={{
