@@ -1,22 +1,4 @@
-import React, { useEffect } from 'react';
-import { useHistory } from 'react-router';
-import { toast } from 'react-toastify';
-import {
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-  Col,
-  Container,
-  Form,
-  FormGroup,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Row,
-} from 'reactstrap';
-import { userService } from '../services/user/api';
+import React from 'react';
 import dataBlogs from '../assets/data/dataBlog.json';
 const Blog: React.FC<any> = (props: any) => {
   return (
@@ -43,9 +25,9 @@ const Blog: React.FC<any> = (props: any) => {
                   className="mt-3"
                   id="describe"
                   style={{ fontSize: '20px' }}>
-                  {dataBlogs[Number(props.match.params.id)]['describe']}
+                  {dataBlogs[Number(props.match.params.id)].describe}
                 </div>
-                <a href="#" style={{ color: 'white' }}>
+                <a href="/" style={{ color: 'white' }}>
                   <div
                     id="author"
                     className="row w-100 d-flex flex-row bd-highlight mt-3">
@@ -79,7 +61,7 @@ const Blog: React.FC<any> = (props: any) => {
             style={{ fontSize: '18px', lineHeight: '40px', color: 'black' }}>
             <div
               dangerouslySetInnerHTML={{
-                __html: dataBlogs[Number(props.match.params.id)]['content'],
+                __html: dataBlogs[Number(props.match.params.id)].content,
               }}
             />
             <br />
@@ -108,7 +90,7 @@ const Blog: React.FC<any> = (props: any) => {
                     Día de los muertos
                   </button>
                 </div>
-                <a href="#" style={{ color: 'white' }}>
+                <a href="/" style={{ color: 'white' }}>
                   <div
                     id="author"
                     className="row w-100 d-flex flex-row bd-highlight mt-3">

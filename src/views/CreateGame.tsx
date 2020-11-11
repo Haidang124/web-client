@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Button,
@@ -7,12 +7,11 @@ import {
   CardHeader,
   Col,
   Container,
-  Input,
   Row,
 } from 'reactstrap';
+import { ListQuestion } from '../components/CreateGame/ListQuestion';
 import QuestionBank from '../components/QuestionBank.js';
 import Answer from '../components/TempAnswer/Answer.js';
-import { ListQuestion } from '../components/CreateGame/ListQuestion';
 const CreateGame: React.FC = () => {
   const [data, setData] = useState([0, 1, 2, 3]);
   return (
@@ -115,7 +114,7 @@ const CreateGame: React.FC = () => {
                         <div className="row">
                           <div className="col align-self-start"></div>
                           <div className="col align-self-center">
-                            <img src="http://placehold.it/300x200" />
+                            <img src="http://placehold.it/300x200" alt="" />
                           </div>
                           <div className="col align-self-end"></div>
                         </div>

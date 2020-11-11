@@ -21,7 +21,7 @@ function login(user: any) {
 function getUser() {
   return API.get(`${URL_PREFIX}/getUserId`);
 }
-function logOut () {
+function logOut() {
   return API.get(`${URL_PREFIX}/logout`);
 }
 function getUserInfo() {

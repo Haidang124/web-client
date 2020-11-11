@@ -66,7 +66,7 @@ const Admin: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
     <>
       <Sidebar
         {...props}
-        routes={[routes[0], routes[1], routes[2], routes[3]]}
+        routes={[routes[0], routes[1], routes[2], routes[3], routes[4]]}
         logo={{
           innerLink: '/admin/index',
           imgSrc: require('../assets/img/brand/kahoot-logo.png'),
