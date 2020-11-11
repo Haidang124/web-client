@@ -9,6 +9,8 @@ class Answer extends React.Component {
       isResult: false, // Câu trả lời đúng/sai - Mặc định là sai
       isEmptyAnswer: true,
       colorResult: 'rgb(102,191,57)',
+      data: props.data,
+      selected: props.selected,
     };
   }
 

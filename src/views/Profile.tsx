@@ -1,7 +1,5 @@
-import { render } from '@testing-library/react';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-
 // reactstrap components
 import {
   Button,
@@ -70,6 +68,7 @@ const Profile: React.FC = () => {
   const changeButtonEdit = () => {
     if (buttonEdit.tenTrangThai === 'Save') {
       postUpdateDataUser();
+      window.location.reload();
     }
     setTrangThai({
       trangThai: !buttonEdit.trangThai,
@@ -88,7 +87,7 @@ const Profile: React.FC = () => {
 
   return (
     <>
-      <UserHeader />
+      <UserHeader username={dataUser.username} />
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>

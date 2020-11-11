@@ -1,5 +1,5 @@
 const dev = {
-  API_URL: 'http://localhost:3000',
+  API_URL: 'http://localhost:3002',
 };
 
 const prod = {
