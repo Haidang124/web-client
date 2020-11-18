@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Card, CardBody, CardHeader } from 'reactstrap';
@@ -38,12 +39,6 @@ const Discover: React.FC = () => {
   const [idGame, setIdGame] = useState('');
   useEffect(() => {
     gameService.getAllGame().then((response) => {
-      // Promise.resolve({
-      //   data: JSON.parse(JSON.stringify(response.data.data)),
-      // }).then(async (post) => {
-      //   setDataGame(post.data);
-      //   console.log(post.data);
-      // });
       setDataGame(response.data.data);
       console.log(response.data.data);
     });
@@ -102,6 +97,7 @@ const Discover: React.FC = () => {
         }}
         funcButton_2={() => {
           deleteGame(idGame);
+          console.log(idGame);
         }}
         funcOnHide={() => console.log('Hide Modal')}></ModalTrueFalse>
       <Card>
@@ -174,34 +170,35 @@ const Discover: React.FC = () => {
                           </span>
                           <div className="row">
                             <div className="col-12 mt-3">
-                              <a
-                                href="/"
+                              <div
                                 className="btn btn-success w-100"
                                 onClick={() => {
                                   getGame(value._id);
                                 }}>
                                 Play game
-                              </a>
+                              </div>
                             </div>
                           </div>
                           <div className="row mt-2">
                             <div className="col-6">
-                              <a
-                                href={'/admin/edit-game/' + value._id}
+                              <div
+                                onClick={() => {
+                                  window.location.href =
+                                    '/admin/edit-game/' + value._id;
+                                }}
                                 className="btn btn-primary w-100">
                                 Edit
-                              </a>
+                              </div>
                             </div>
                             <div className="col-6">
-                              <a
-                                href="/"
-                                className="btn btn-danger w-100"
+                              <div
+                                className="btn btn-danger w-100 text-white"
                                 onClick={() => {
                                   setShowDelete(true);
                                   setIdGame(value._id);
                                 }}>
                                 Delete
-                              </a>
+                              </div>
                             </div>
                           </div>
                         </p>

@@ -66,6 +66,7 @@ const CreateGame: React.FC = () => {
     (document.getElementById('time') as HTMLInputElement).value = String(
       data[selected].time,
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const removeQuestion = (index) => {
     try {

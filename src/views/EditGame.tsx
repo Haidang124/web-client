@@ -18,6 +18,7 @@ import QuestionBank from '../components/QuestionBank.js';
 import { gameService } from '../services/game/api';
 import ModalSave from './ModalSave';
 import ModalTrueFalse from './ModalTrueFalse';
+// fix lai cai lôi do toi xoa nham truong di . Hom sau dat ten cho chuan , Họac sang sua ben serve ây
 const EditGame: React.FC = () => {
   const { params } = useRouteMatch();
   const gameId = params['id'];
@@ -66,6 +67,7 @@ const EditGame: React.FC = () => {
   });
   useEffect(() => {
     getDataGame();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const getDataGame = () => {
     gameService
@@ -128,8 +130,8 @@ const EditGame: React.FC = () => {
   const updateDataGame = (title, imageGame) => {
     gameService
       .updateGame({
-        game_id: gameId,
-        game_name: title,
+        gameId: gameId,
+        gameName: title,
         imageGame: imageGame,
         dataQuestion: data,
       })
