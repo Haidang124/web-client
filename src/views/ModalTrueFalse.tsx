@@ -1,15 +1,12 @@
 import React from 'react';
-import { useHistory } from 'react-router';
-import { toast } from 'react-toastify';
-import { FormControl, Modal, InputGroup, Button } from 'react-bootstrap';
-import { userService } from '../services/user/api';
+import { Button, Modal } from 'react-bootstrap';
 
-const Modal_TrueFalse: React.FC<any> = (props: any) => {
+const ModalTrueFalse: React.FC<any> = (props: any) => {
   return (
     <>
       <Modal
         size={props.size ? 'sm' : props.size}
-        show={props.show} //false: Không hiển thị, true: hiển thị
+        show={props.show} // false: Không hiển thị, true: hiển thị
         onHide={() => {
           props.setClose();
           props.funcOnHide();
@@ -63,4 +60,4 @@ const Modal_TrueFalse: React.FC<any> = (props: any) => {
   );
 };
 
-export default Modal_TrueFalse;
+export default ModalTrueFalse;

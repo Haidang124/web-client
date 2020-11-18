@@ -1,7 +1,7 @@
 import 'phaser';
 import React, { useEffect, useState } from 'react';
-import { gameService } from '../services/game/api';
 import { useRouteMatch } from 'react-router-dom';
+import { gameService } from '../services/game/api';
 
 const GameDetail: React.FC<any> = () => {
   const { params } = useRouteMatch();
@@ -68,21 +68,6 @@ const GameDetail: React.FC<any> = () => {
   //   },
   // };
 
-  // bay gio no kiêu như thê nay
-  // phai chen them image can hienj thi trong resoucre nữa rồi cái image trong data cần goi tên nữa là đc. Cho là mảng được kho. mảng g/ moi cai ten khac nhau ma
-  // ns chung k cho dc cai image phia duoi fix cung luôn vạy la đc. cần thay đổi cái trên là xong. Nhuwng caí database nó cố định mà
-  // chưa hiểu. chỉnh lại db đi. Làm sao chèn được nhiều image phía trên resource ấy. Phải cho nó là mảng thì mới chèn được chứ
-  // hinh nhu trong js co push cho 1 object
-  // the gio sua db theo cai moi nay nha
-  // element[`image${n}`]="11"
-
-  // chỗ gameData nay la dât cho game. tôi đang fix cứng nó ở như thế. nhưng đúng ra pahri lấy api rồi get về như cái hàm useefect kia.
-  // việc cần làm bây giờ vào bên sserve tạo 1 model mới tên game.để lưu data cho game
-  // sau ddos vieets api để lấy data. rồi gọi ở chỗ này
-  //viết như user đấy hả. uk tạo 1 model mới cùng chỗ vs user. cũng gôm 3 file model, controler, router
-  // có viết đc k hay để tôi viết.. Để tôi xem rồi thửu viết xem sao. làm chỗ vs cái user nha
-  // viết thêm api tạo data cho game từ cái create game ông đang làm ấy. từ cái create game nó phải lưu vào đc dbase.
-  // Nó lưu xong phải xuất hiện ơ chỗ discorver ấy. Chỗ discorvr  lầ mấy cái game đã tạo ra rồi chỉ có vào chơi
   const [phaserGame, setPhaserGame] = useState<Phaser.Game>();
   const [gameDataPhaser, setGameDataPhaser] = useState(null);
 

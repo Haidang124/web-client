@@ -1,5 +1,6 @@
+/* eslint-disable react/jsx-pascal-case */
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Image } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import {
   Button,
@@ -8,20 +9,18 @@ import {
   CardFooter,
   CardHeader,
   Col,
-  Container,
   Input,
   Row,
 } from 'reactstrap';
-import { Image } from 'react-bootstrap';
+import '../assets/css/createGame.css';
 import { ListQuestion } from '../components/CreateGame/ListQuestion';
 import QuestionBank from '../components/QuestionBank.js';
-import Modal_TrueFalse from './Modal_TrueFalse';
-import '../assets/css/createGame.css';
-import Modal_Save from './Modal_Save';
 import { gameService } from '../services/game/api';
+import Modal_Save from './ModalSave';
+import Modal_TrueFalse from './ModalTrueFalse';
 const CreateGame: React.FC = () => {
-  const [data, setData] = useState([
-    //[{question; image, listAnswer['A','B','C','D'], time, key}]
+  const [data] = useState([
+    // [{question; image, listAnswer['A','B','C','D'], time, key}]
     {
       question: '',
       image:
@@ -36,7 +35,7 @@ const CreateGame: React.FC = () => {
   const [showDelete, setShowDelete] = useState(false);
   const [showQuit, setShowQuit] = useState(false);
   const [showSave, setShowSave] = useState(false);
-  const [index_delete_duplicate, setIndex_Del_Dup] = useState(-1);
+  const [indexDeleteDuplicate, setIndexDelDup] = useState(-1);
   const [colorAnswer] = useState({
     answer_0: 'rgb(226,27,60)',
     answer_1: 'rgb(19,104,206)',
@@ -45,18 +44,18 @@ const CreateGame: React.FC = () => {
   });
   useEffect(() => {
     (document.getElementById('question') as HTMLInputElement).value =
-      data[selected]['question'];
-    for (var i = 0; i < 4; i++) {
+      data[selected].question;
+    for (let i = 0; i < 4; i++) {
       (document.getElementById('answer_' + i) as HTMLInputElement).value =
-        data[selected]['listAnswer'][i];
-      if (data[selected]['listAnswer'][i] != '') {
+        data[selected].listAnswer[i];
+      if (data[selected].listAnswer[i] !== '') {
         document.getElementById('answer_' + i).style.backgroundColor = String(
           colorAnswer['answer_' + i],
         );
       } else {
         document.getElementById('answer_' + i).style.backgroundColor = 'white';
       }
-      if (i == data[selected]['key']) {
+      if (i === data[selected].key) {
         document.getElementById('resultanswer_' + i).style.backgroundColor =
           'rgb(102,191,57)';
       } else {
@@ -65,12 +64,12 @@ const CreateGame: React.FC = () => {
       }
     }
     (document.getElementById('time') as HTMLInputElement).value = String(
-      data[selected]['time'],
+      data[selected].time,
     );
   }, []);
   const removeQuestion = (index) => {
     try {
-      if (lengthData > 1 && index != -1) {
+      if (lengthData > 1 && index !== -1) {
         data.splice(index, 1);
         setLengthData(data.length);
         toast.success('Delete câu hỏi thành công!');
@@ -81,11 +80,11 @@ const CreateGame: React.FC = () => {
       toast.error('Delete ERROR!');
     }
   };
-  const sendDataGame = (title, image_game) => {
+  const sendDataGame = (title, imageGame) => {
     gameService
       .createGame({
         game_name: title,
-        image_game: image_game,
+        imageGame: imageGame,
         dataQuestion: data,
       })
       .then((res) => {
@@ -98,17 +97,17 @@ const CreateGame: React.FC = () => {
   };
   const duplicateQuestion = (index, dataQuestion) => {
     try {
-      var newData = {
-        question: dataQuestion['question'],
-        image: dataQuestion['image'],
+      let newData = {
+        question: dataQuestion.question,
+        image: dataQuestion.image,
         listAnswer: [
-          dataQuestion['listAnswer'][0],
-          dataQuestion['listAnswer'][1],
-          dataQuestion['listAnswer'][2],
-          dataQuestion['listAnswer'][3],
+          dataQuestion.listAnswer[0],
+          dataQuestion.listAnswer[1],
+          dataQuestion.listAnswer[2],
+          dataQuestion.listAnswer[3],
         ],
-        key: dataQuestion['key'],
-        time: dataQuestion['time'],
+        key: dataQuestion.key,
+        time: dataQuestion.time,
       };
       data.splice(index, 0, newData);
       setLengthData(data.length);
@@ -118,10 +117,10 @@ const CreateGame: React.FC = () => {
     }
   };
   const changeBackGround = (e) => {
-    var id = e.target.id;
-    var id_num = Number(id.substring(7, 8));
-    data[selected]['listAnswer'][id_num] = e.target.value;
-    if (e.target.value != '') {
+    let id = e.target.id;
+    let idNum = Number(id.substring(7, 8));
+    data[selected].listAnswer[idNum] = e.target.value;
+    if (e.target.value !== -'') {
       (document.getElementById(id) as HTMLInputElement).style.backgroundColor =
         colorAnswer[id];
     } else {
@@ -132,11 +131,11 @@ const CreateGame: React.FC = () => {
   const changeSelected = (value) => {
     setSelected(value);
     (document.getElementById('question') as HTMLInputElement).value =
-      data[value]['question'];
-    for (var i = 0; i < 4; i++) {
+      data[value].question;
+    for (let i = 0; i < 4; i++) {
       (document.getElementById('answer_' + i) as HTMLInputElement).value =
-        data[value]['listAnswer'][i];
-      if (data[value]['listAnswer'][i] != '') {
+        data[value].listAnswer[i];
+      if (data[value].listAnswer[i] !== '') {
         (document.getElementById(
           'answer_' + i,
         ) as HTMLInputElement).style.backgroundColor =
@@ -146,7 +145,7 @@ const CreateGame: React.FC = () => {
           'answer_' + i,
         ) as HTMLInputElement).style.backgroundColor = 'white';
       }
-      if (i == data[value]['key']) {
+      if (i === data[value].key) {
         (document.getElementById(
           'resultanswer_' + i,
         ) as HTMLInputElement).style.backgroundColor = 'rgb(102,191,57)';
@@ -157,19 +156,19 @@ const CreateGame: React.FC = () => {
       }
     }
     (document.getElementById('time') as HTMLInputElement).value = String(
-      data[value]['time'],
+      data[value].time,
     );
   };
   const changeTime = (e) => {
-    var time = Number(e.target.value);
-    data[selected]['time'] = time;
+    let time = Number(e.target.value);
+    data[selected].time = time;
   };
   const clickResultAnswer = (e) => {
-    var id = e.target.id;
-    var temp = id.substring(13, 14); // số thứ tự của ô lựa chọn [0,1,2,3]
-    data[selected]['key'] = Number(temp);
-    for (var i = 0; i < 4; i++) {
-      if (i == Number(temp)) {
+    let id = e.target.id;
+    let temp = id.substring(13, 14); // số thứ tự của ô lựa chọn [0,1,2,3]
+    data[selected].key = Number(temp);
+    for (let i = 0; i < 4; i++) {
+      if (i === Number(temp)) {
         (document.getElementById(
           id,
         ) as HTMLInputElement).style.backgroundColor = 'rgb(102,191,57)';
@@ -181,7 +180,7 @@ const CreateGame: React.FC = () => {
     }
   };
   const addQuestion = () => {
-    var newData = {
+    let newData = {
       question: '',
       image:
         'https://res.cloudinary.com/vnu-uet/image/upload/v1604428182/111_vx6tvo.jpg',
@@ -216,8 +215,8 @@ const CreateGame: React.FC = () => {
         }}
         funcButton_1={() => console.log("Don't delete!")}
         funcButton_2={() => {
-          removeQuestion(index_delete_duplicate);
-          setIndex_Del_Dup(-1);
+          removeQuestion(indexDeleteDuplicate);
+          setIndexDelDup(-1);
         }}
         funcOnHide={() => console.log('Hide Modal')}></Modal_TrueFalse>
       {/* Quit Create game */}
@@ -248,11 +247,11 @@ const CreateGame: React.FC = () => {
       {/* Save Game */}
       <Modal_Save
         title=""
-        image_game=""
+        imageGame=""
         show={showSave}
         funcQuit={() => console.log("Don't Save")}
-        funcSave={(title, image_game) => {
-          sendDataGame(title, image_game);
+        funcSave={(title, imageGame) => {
+          sendDataGame(title, imageGame);
         }}
         setClose={() => {
           setShowSave(false);
@@ -290,7 +289,7 @@ const CreateGame: React.FC = () => {
                         }}
                         funRemoveQuestion={(index) => {
                           setShowDelete(true);
-                          setIndex_Del_Dup(index);
+                          setIndexDelDup(index);
                         }}
                         funDuplicate={(index, dataQuestion) =>
                           duplicateQuestion(index, dataQuestion)
@@ -331,7 +330,7 @@ const CreateGame: React.FC = () => {
                           id="question"
                           className="question"
                           onChange={(e) => {
-                            data[selected]['question'] = e.target.value;
+                            data[selected].question = e.target.value;
                           }}></Input>
                       </div>
                     </div>

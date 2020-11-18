@@ -1,12 +1,10 @@
 /*eslint-disable*/
-import React, { useState } from 'react';
-// reactstrap components
-import { Col, Nav, NavItem, NavLink, Row } from 'reactstrap';
+import React from 'react';
 
 const ListQuestion: React.FC<any> = (props: any) => {
   const createList = (length) => {
-    var lengthData = [0];
-    for (var i = 1; i < length; i++) {
+    let lengthData = [0];
+    for (let i = 1; i < length; i++) {
       lengthData.push(i);
     }
     return lengthData;
@@ -54,9 +52,9 @@ const ListQuestion: React.FC<any> = (props: any) => {
                     }}
                     disabled
                     value={
-                      props.data[key]['question'] == ''
+                      props.data[key].question == ''
                         ? 'Type your question'
-                        : props.data[key]['question']
+                        : props.data[key].question
                     }></input>
                   <div className="row">
                     <div
@@ -66,7 +64,7 @@ const ListQuestion: React.FC<any> = (props: any) => {
                         color:
                           key == props.selected ? 'black' : 'rgb(131,125,118)',
                       }}>
-                      {props.data[key]['time']}s
+                      {props.data[key].time}s
                     </div>
                   </div>
                   <div className="row">
@@ -77,7 +75,7 @@ const ListQuestion: React.FC<any> = (props: any) => {
                           width: '50%',
                           height: '50%',
                           backgroundColor:
-                            props.data[key]['key'] == 0
+                            props.data[key].key == 0
                               ? 'rgb(102,191,57)'
                               : 'white',
                         }}
@@ -91,7 +89,7 @@ const ListQuestion: React.FC<any> = (props: any) => {
                           width: '50%',
                           height: '50%',
                           backgroundColor:
-                            props.data[key]['key'] == 1
+                            props.data[key].key == 1
                               ? 'rgb(102,191,57)'
                               : 'white',
                         }}
@@ -105,7 +103,7 @@ const ListQuestion: React.FC<any> = (props: any) => {
                           width: '50%',
                           height: '50%',
                           backgroundColor:
-                            props.data[key]['key'] == 2
+                            props.data[key].key == 2
                               ? 'rgb(102,191,57)'
                               : 'white',
                         }}
@@ -119,7 +117,7 @@ const ListQuestion: React.FC<any> = (props: any) => {
                           width: '50%',
                           height: '50%',
                           backgroundColor:
-                            props.data[key]['key'] == 3
+                            props.data[key].key == 3
                               ? 'rgb(102,191,57)'
                               : 'white',
                         }}

@@ -1,16 +1,13 @@
-import React, { useEffect } from 'react';
-import { useHistory } from 'react-router';
-import { toast } from 'react-toastify';
-import { FormControl, Modal, InputGroup, Button } from 'react-bootstrap';
-import { userService } from '../services/user/api';
+import React from 'react';
+import { Button, Modal } from 'react-bootstrap';
 import { Input } from 'reactstrap';
 
-const Modal_Save: React.FC<any> = (props: any) => {
+const ModalSave: React.FC<any> = (props: any) => {
   return (
     <>
       <Modal
         size="lg"
-        show={props.show} //false: Không hiển thị, true: hiển thị
+        show={props.show} // false: Không hiển thị, true: hiển thị
         onHide={() => {
           props.setClose();
         }}
@@ -39,20 +36,20 @@ const Modal_Save: React.FC<any> = (props: any) => {
                 id="image_url"
                 type="text"
                 style={{ fontSize: '17px' }}
-                defaultValue={props.image_game}
+                defaultValue={props.imageGame}
                 onChange={(e) => {
                   (document.getElementById(
-                    'image_game',
+                    'imageGame',
                   ) as HTMLInputElement).src = e.target.value;
                 }}></Input>
               <div className="d-flex justify-content-center w-100 mt-2">
                 <img
                   alt="Ảnh không tồn tại"
-                  id="image_game"
+                  id="imageGame"
                   src={
-                    props.image_game == ''
+                    props.imageGame === ''
                       ? 'http://placehold.it/500x300'
-                      : props.image_game
+                      : props.imageGame
                   }
                   width="500px"
                   height="300px"
@@ -87,13 +84,13 @@ const Modal_Save: React.FC<any> = (props: any) => {
                   color: 'white',
                 }}
                 onClick={(e) => {
-                  var title = (document.getElementById(
+                  let title = (document.getElementById(
                     'title',
                   ) as HTMLInputElement).value;
-                  var image_game = (document.getElementById(
+                  let imageGame = (document.getElementById(
                     'image_url',
                   ) as HTMLInputElement).value;
-                  props.funcSave(title, image_game);
+                  props.funcSave(title, imageGame);
                   props.setClose();
                 }}>
                 <b>Save</b>
@@ -106,4 +103,4 @@ const Modal_Save: React.FC<any> = (props: any) => {
   );
 };
 
-export default Modal_Save;
+export default ModalSave;

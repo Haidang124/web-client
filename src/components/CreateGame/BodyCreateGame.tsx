@@ -1,7 +1,7 @@
 /*eslint-disable*/
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 // reactstrap components
-import { Col, Nav, NavItem, NavLink, Row } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import Answer from '../TempAnswer/Answer';
 
 const BodyCreateGame: React.FC<any> = (props: any) => {
