@@ -31,7 +31,7 @@ const Game: React.FC = () => {
                   <Col lg="5" className="mt-6 mb-6 ml-6">
                     <Row className="mt-3">
                       <Col lg="9" className="center">
-                        <Link to="/admin/list-game">
+                        <Link to="/admin/game">
                           <Button style={{ width: '25em', height: '25em' }}>
                             <svg
                               width="15em"

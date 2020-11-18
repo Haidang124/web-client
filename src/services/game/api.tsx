@@ -8,6 +8,7 @@ export const gameService = {
   getGameName,
   getAllGame,
   deleteGame,
+  updateGame,
 };
 
 function createGame(data: any) {
@@ -24,4 +25,7 @@ function getAllGame() {
 }
 function deleteGame(game_id: any) {
   return API.post(`${URL_PREFIX}/deleteGame`, game_id);
+}
+function updateGame(data: any) {
+  return API.post(`${URL_PREFIX}/updateGame`, data);
 }
