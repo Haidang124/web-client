@@ -29,20 +29,22 @@ const ListQuestion: React.FC<any> = (props: any) => {
                     paddingLeft: '10px',
                     fontWeight: 'bold',
                   }}>
-                  {key + 1}.{' '}
-                  {props.data[key].species == 'quiz' ? 'Quiz' : 'True Or False'}
+                  {key + 1}. Quiz
                 </span>
                 <button
                   id={'question' + key}
                   style={{
                     border: 'none',
-                    backgroundColor: 'white',
+                    backgroundColor:
+                      key == props.selected ? 'white' : 'rgb(242,242,242)',
                     margin: '10px',
+                    borderRadius: '5px',
                   }}
                   onClick={(e) => {
                     props.funSetSelected(key);
                   }}>
                   <input
+                    className="mt-1"
                     style={{
                       width: '100%',
                       textAlign: 'center',
@@ -52,17 +54,32 @@ const ListQuestion: React.FC<any> = (props: any) => {
                     }}
                     disabled
                     value={
-                      props.data[key].questionTitle == ''
+                      props.data[key]['question'] == ''
                         ? 'Type your question'
-                        : props.data[key].questionTitle
+                        : props.data[key]['question']
                     }></input>
                   <div className="row">
+                    <div
+                      className="col-12 text-center"
+                      style={{
+                        fontWeight: 'bold',
+                        color:
+                          key == props.selected ? 'black' : 'rgb(131,125,118)',
+                      }}>
+                      {props.data[key]['time']}s
+                    </div>
+                  </div>
+                  <div className="row">
                     <div className="col col-6">
                       <input
                         type="text"
                         style={{
                           width: '50%',
                           height: '50%',
+                          backgroundColor:
+                            props.data[key]['key'] == 0
+                              ? 'rgb(102,191,57)'
+                              : 'white',
                         }}
                         disabled
                       />
@@ -73,45 +90,48 @@ const ListQuestion: React.FC<any> = (props: any) => {
                         style={{
                           width: '50%',
                           height: '50%',
+                          backgroundColor:
+                            props.data[key]['key'] == 1
+                              ? 'rgb(102,191,57)'
+                              : 'white',
                         }}
                         disabled
                       />
                     </div>
-                    {(() => {
-                      if (props.data[key].species == 'quiz') {
-                        return (
-                          <>
-                            <div className="col col-6">
-                              <input
-                                type="text"
-                                style={{
-                                  width: '50%',
-                                  height: '50%',
-                                }}
-                                disabled
-                              />
-                            </div>
-                            <div className="col col-6">
-                              <input
-                                type="text"
-                                style={{
-                                  width: '50%',
-                                  height: '50%',
-                                }}
-                                disabled
-                              />
-                            </div>
-                          </>
-                        );
-                      }
-                    })()}
+                    <div className="col col-6">
+                      <input
+                        type="text"
+                        style={{
+                          width: '50%',
+                          height: '50%',
+                          backgroundColor:
+                            props.data[key]['key'] == 2
+                              ? 'rgb(102,191,57)'
+                              : 'white',
+                        }}
+                        disabled
+                      />
+                    </div>
+                    <div className="col col-6">
+                      <input
+                        type="text"
+                        style={{
+                          width: '50%',
+                          height: '50%',
+                          backgroundColor:
+                            props.data[key]['key'] == 3
+                              ? 'rgb(102,191,57)'
+                              : 'white',
+                        }}
+                        disabled
+                      />
+                    </div>
                   </div>
                 </button>
-                <div className="mt-2">
-                  <div className="row">
-                    <div className="col col-1"></div>
+                <div className="mt-2" style={{ padding: '0 20px 10px 20px' }}>
+                  <div className="d-flex justify-content-around">
                     {/* Duplicate */}
-                    <div className="col col-5">
+                    <div className="col-2">
                       <button
                         onClick={(e) =>
                           props.funDuplicate(key, props.data[key])
@@ -139,9 +159,10 @@ const ListQuestion: React.FC<any> = (props: any) => {
                         </svg>
                       </button>
                     </div>
+                    <div className="col-2"></div>
                     {/* Delete */}
                     <div
-                      className="col col-5"
+                      className="col-2"
                       onClick={(e) => props.funRemoveQuestion(key)}>
                       <button
                         style={{
@@ -165,7 +186,6 @@ const ListQuestion: React.FC<any> = (props: any) => {
                       </button>
                     </div>
                     <br />{' '}
-                    <span style={{ lineHeight: '0.6rem' }}>{'\u00A0'}</span>
                   </div>
                 </div>
               </div>

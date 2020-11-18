@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {
   Button,
@@ -19,16 +19,38 @@ import Modal_TrueFalse from './Modal_TrueFalse';
 import '../assets/css/createGame.css';
 import Modal_Save from './Modal_Save';
 import { gameService } from '../services/game/api';
-const CreateGame: React.FC = () => {
+const EditGame: React.FC = () => {
+  const { params } = useRouteMatch();
+  const gameId = params['id'];
+  const [dataGame, setDataGame] = useState({
+    title: '',
+    resources: {
+      image: {
+        image: '',
+      },
+    },
+    data: {
+      array: [
+        //[{question; image, listAnswer['A','B','C','D'], time, key}]
+        {
+          question: '',
+          image:
+            'https://res.cloudinary.com/vnu-uet/image/upload/v1604428182/111_vx6tvo.jpg',
+          listAnswer: ['', '', '', ''],
+          key: -1,
+          time: 0,
+        },
+      ],
+    },
+  });
   const [data, setData] = useState([
-    //[{question; image, listAnswer['A','B','C','D'], time, key}]
     {
       question: '',
       image:
         'https://res.cloudinary.com/vnu-uet/image/upload/v1604428182/111_vx6tvo.jpg',
       listAnswer: ['', '', '', ''],
       key: -1,
-      time: 5,
+      time: 0,
     },
   ]);
   const [selected, setSelected] = useState(0);
@@ -44,30 +66,53 @@ const CreateGame: React.FC = () => {
     answer_3: 'rgb(38,137,12)',
   });
   useEffect(() => {
+    getDataGame();
+  }, []);
+  const getDataGame = () => {
+    gameService
+      .getGameId(gameId)
+      .then((res) => {
+        setDataGame(res.data.data);
+        setData(res.data.data.data.array);
+        setValueElement(res.data.data.data.array);
+        setLengthData(res.data.data.data.array.length);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+        window.location.href = '/admin/index';
+      });
+  };
+  const setValueElement = (data) => {
     (document.getElementById('question') as HTMLInputElement).value =
       data[selected]['question'];
     for (var i = 0; i < 4; i++) {
       (document.getElementById('answer_' + i) as HTMLInputElement).value =
         data[selected]['listAnswer'][i];
       if (data[selected]['listAnswer'][i] != '') {
-        document.getElementById('answer_' + i).style.backgroundColor = String(
+        (document.getElementById(
+          'answer_' + i,
+        ) as HTMLInputElement).style.backgroundColor = String(
           colorAnswer['answer_' + i],
         );
       } else {
-        document.getElementById('answer_' + i).style.backgroundColor = 'white';
+        (document.getElementById(
+          'answer_' + i,
+        ) as HTMLInputElement).style.backgroundColor = 'white';
       }
       if (i == data[selected]['key']) {
-        document.getElementById('resultanswer_' + i).style.backgroundColor =
-          'rgb(102,191,57)';
+        (document.getElementById(
+          'resultanswer_' + i,
+        ) as HTMLInputElement).style.backgroundColor = 'rgb(102,191,57)';
       } else {
-        document.getElementById('resultanswer_' + i).style.backgroundColor =
-          'white';
+        (document.getElementById(
+          'resultanswer_' + i,
+        ) as HTMLInputElement).style.backgroundColor = 'white';
       }
     }
     (document.getElementById('time') as HTMLInputElement).value = String(
       data[selected]['time'],
     );
-  }, []);
+  };
   const removeQuestion = (index) => {
     try {
       if (lengthData > 1 && index != -1) {
@@ -81,15 +126,17 @@ const CreateGame: React.FC = () => {
       toast.error('Delete ERROR!');
     }
   };
-  const sendDataGame = (title, image_game) => {
+  const updateDataGame = (title, image_game) => {
     gameService
-      .createGame({
+      .updateGame({
+        game_id: gameId,
         game_name: title,
         image_game: image_game,
         dataQuestion: data,
       })
       .then((res) => {
         toast.success(res.data.message);
+        // window.location.reload();
         window.location.href = '/admin/discover';
       })
       .catch((error) => {
@@ -192,6 +239,7 @@ const CreateGame: React.FC = () => {
     data.push(newData);
     setLengthData(data.length);
     changeSelected(lengthData);
+    console.log(data);
   };
   return (
     <>
@@ -247,12 +295,14 @@ const CreateGame: React.FC = () => {
         funcOnHide={() => console.log('Hide Modal')}></Modal_TrueFalse>
       {/* Save Game */}
       <Modal_Save
-        title=""
-        image_game=""
+        title={dataGame['title']}
+        image_game={dataGame['resources']['image']['image']}
         show={showSave}
-        funcQuit={() => console.log("Don't Save")}
+        funcQuit={() => {
+          console.log("Don't Save");
+        }}
         funcSave={(title, image_game) => {
-          sendDataGame(title, image_game);
+          updateDataGame(title, image_game);
         }}
         setClose={() => {
           setShowSave(false);
@@ -265,7 +315,7 @@ const CreateGame: React.FC = () => {
             <CardHeader className="bg-white border-0">
               <Row className="align-items-center">
                 <Col xs="11">
-                  <h3 className="mb-0">"New Kahoot"</h3>
+                  <h3 className="mb-0">{dataGame['title']}</h3>
                 </Col>
               </Row>
             </CardHeader>
@@ -312,7 +362,9 @@ const CreateGame: React.FC = () => {
                         <div className="mt-2">
                           <QuestionBank
                             data={data}
-                            refreshData={(qb) => {}}
+                            refreshData={(qb) => {
+                              qb.setState({ data: data });
+                            }}
                             widthButton="100%"
                             nameButton="Question Bank"
                             colorButton="rgb(120,77,251)"></QuestionBank>
@@ -513,4 +565,4 @@ const CreateGame: React.FC = () => {
   );
 };
 
-export default CreateGame;
+export default EditGame;
