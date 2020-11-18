@@ -1,10 +1,11 @@
 import 'phaser';
-import React, { useState } from 'react';
-// import { useRouteMatch } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { gameService } from '../services/game/api';
+import { useRouteMatch } from 'react-router-dom';
 
 const GameDetail: React.FC<any> = () => {
-  // const { params } = useRouteMatch();
-  // const { gameId } = params as any;
+  const { params } = useRouteMatch();
+  const { gameId } = params as any;
   let gameData = {
     game_type: 'happy-circle',
     title: 'Happy circle',
@@ -38,8 +39,8 @@ const GameDetail: React.FC<any> = () => {
       array: [
         {
           question: 'He was the first President of the United States',
-          key: 2,
-          listAnswer: ['Đáp án 1', 'Hai dang', 'abc', 'Đáp án 4'],
+          key: 2, //Đáp án đúng
+          listAnswer: ['Lưu  Hai Đang', 'Hai dang', 'abc', 'Đáp án 4'],
           image:
             'https://res.cloudinary.com/vnu-uet/image/upload/v1604428182/111_vx6tvo.jpg',
           time: 15,
@@ -63,12 +64,20 @@ const GameDetail: React.FC<any> = () => {
       ],
     },
   };
+  // chỗ gameData nay la dât cho game. tôi đang fix cứng nó ở như thế. nhưng đúng ra pahri lấy api rồi get về như cái hàm useefect kia.
+  // việc cần làm bây giờ vào bên sserve tạo 1 model mới tên game.để lưu data cho game
+  // sau ddos vieets api để lấy data. rồi gọi ở chỗ này
+  //viết như user đấy hả. uk tạo 1 model mới cùng chỗ vs user. cũng gôm 3 file model, controler, router
+  // có viết đc k hay để tôi viết.. Để tôi xem rồi thửu viết xem sao. làm chỗ vs cái user nha
+  // viết thêm api tạo data cho game từ cái create game ông đang làm ấy. từ cái create game nó phải lưu vào đc dbase.
+  // Nó lưu xong phải xuất hiện ơ chỗ discorver ấy. Chỗ discorvr  lầ mấy cái game đã tạo ra rồi chỉ có vào chơi
   const [phaserGame, setPhaserGame] = useState<Phaser.Game>();
-  // const [gameData, setGameData] = useState(null);
+  const [gameDataPhaser, setGameDataPhaser] = useState(null);
 
   // useEffect(() => {
-  //   gameService.getGame(gameId).then((response) => {
-  //     setGameData(response.data.data);
+  //   gameService.getGameId(gameId).then((response) => {
+  //     setGameDataPhaser(response.data.data);
+  //     console.log(response.data.data);
   //   });
   // }, [gameId]);
 

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import {
   Button,
   Card,
@@ -9,13 +10,143 @@ import {
   Container,
   Row,
 } from 'reactstrap';
+import BodyCreateGame from '../components/CreateGame/BodyCreateGame';
 import { ListQuestion } from '../components/CreateGame/ListQuestion';
 import QuestionBank from '../components/QuestionBank.js';
 import Answer from '../components/TempAnswer/Answer.js';
+import Modal_TrueFalse from './Modal_TrueFalse';
 const CreateGame: React.FC = () => {
-  const [data, setData] = useState([0, 1, 2, 3]);
+  // const [data, setData] = useState([0, 1, 2, 3]);
+  const [data, setData] = useState([
+    //{questionTitle; answer_1; answer_2; answer_3; answer_4; species: 'quiz'/'true-false'}
+    {
+      questionTitle: 'Question 1',
+      answer: [
+        'Question 1 - Answer 1',
+        'Question 1 - Answer 2',
+        'Question 1 - Answer 3',
+        'Question 1 - Answer 4',
+      ],
+      species: 'quiz',
+    },
+    {
+      questionTitle: 'Question 2',
+      answer: [
+        'Question 2 - Answer 1',
+        'Question 2 - Answer 2',
+        'Question 2 - Answer 3',
+        'Question 2 - Answer 4',
+      ],
+      species: 'true-false',
+    },
+    {
+      questionTitle: 'Question 3',
+      answer: [
+        'Question 3 - Answer 1',
+        'Question 3 - Answer 2',
+        'Question 3 - Answer 3',
+        'Question 3 - Answer 4',
+      ],
+      species: 'true-false',
+    },
+  ]);
+  const [selected, setSelected] = useState(0);
+  const [lengthData, setLenthData] = useState(data.length);
+  const [showDelete, setShowDelete] = useState(false);
+  const [index_delete_duplicate, setIndex_Del_Dup] = useState(-1);
+  const [IsAddQuestion, setAddQuestion] = useState<any>(0);
+  useEffect(() => {
+    (document.getElementById('questionTitle') as HTMLInputElement).value =
+      data[selected].questionTitle;
+  });
+  const removeQuestion = (index) => {
+    try {
+      if (lengthData > 1 && index != -1) {
+        data.splice(index, 1);
+        setLenthData(data.length);
+        toast.success('Delete câu hỏi thành công!');
+      } else {
+        toast.error('Không thể xóa câu hỏi này!');
+      }
+    } catch (error) {
+      toast.error('Delete ERROR!');
+    }
+  };
+
+  const duplicateQuestion = (index, dataQuestion) => {
+    try {
+      data.splice(index, 0, dataQuestion);
+      setLenthData(data.length);
+      toast.success('Duplicate câu hỏi thành công!');
+    } catch (error) {
+      toast.error('Duplicate ERROR!');
+    }
+  };
+  const addQuestion = (species) => {
+    if (species == 'quiz' || species == 'true-false') {
+      data.push({
+        questionTitle: 'Question ' + (data.length + 1),
+        answer: [
+          'Question 3 - Answer 1',
+          'Question 3 - Answer 2',
+          'Question 3 - Answer 3',
+          'Question 3 - Answer 4',
+        ],
+        species: species,
+      });
+      setLenthData(data.length);
+    }
+  };
   return (
     <>
+      {/* Delete Question ? */}
+      <Modal_TrueFalse
+        show={showDelete}
+        data={{
+          title: 'You want delete question?',
+          button_1: {
+            title: 'No',
+            backgroundColor: 'rgb(242,242,242)',
+            color: 'black',
+          },
+          button_2: {
+            title: 'Yes',
+            backgroundColor: 'rgb(226,27,60)',
+            color: 'white',
+          },
+        }}
+        setClose={() => {
+          setShowDelete(false);
+        }}
+        funcButton_1={() => console.log("Don't delete!")}
+        funcButton_2={() => {
+          removeQuestion(index_delete_duplicate);
+          setIndex_Del_Dup(-1);
+        }}
+        funcOnHide={() => console.log('Hide Modal')}></Modal_TrueFalse>
+      {/* Add Question ? */}
+      <Modal_TrueFalse
+        show={IsAddQuestion == 1 ? true : false}
+        data={{
+          title: 'Test knowledge',
+          button_1: { title: 'Quiz', backgroundColor: 'rgb(76,175,80)' },
+          button_2: {
+            title: 'True or False',
+            backgroundColor: 'rgb(0,140,186)',
+          },
+        }}
+        setClose={() => {
+          setAddQuestion(0);
+        }}
+        funcButton_1={() => {
+          console.log('Add quiz!');
+          addQuestion('quiz');
+        }}
+        funcButton_2={() => {
+          console.log('Add True or False!');
+          addQuestion('true-false');
+        }}
+        funcOnHide={() => {}}></Modal_TrueFalse>
       <Container fluid>
         <Row>
           <Col className="order-xl-1" xl="12">
@@ -43,7 +174,24 @@ const CreateGame: React.FC = () => {
                       }}>
                       <div>
                         {/* List Question */}
-                        <ListQuestion data={data}></ListQuestion>
+                        <ListQuestion
+                          data={data}
+                          lengthData={lengthData}
+                          selected={selected}
+                          funSetSelected={(value) => {
+                            setSelected(value);
+                            (document.getElementById(
+                              'questionTitle',
+                            ) as HTMLInputElement).value =
+                              data[value].questionTitle;
+                          }}
+                          funRemoveQuestion={(index) => {
+                            setShowDelete(true);
+                            setIndex_Del_Dup(index);
+                          }}
+                          funDuplicate={(index, dataQuestion) =>
+                            duplicateQuestion(index, dataQuestion)
+                          }></ListQuestion>
                         {/* End list question */}
                         <div className="mt-2">
                           <Button
@@ -53,8 +201,8 @@ const CreateGame: React.FC = () => {
                               backgroundColor: 'rgb(55,155,255)',
                             }}
                             onClick={(e) => {
-                              e.preventDefault();
-                              // console.log(getCurrentQ());
+                              // e.preventDefault();
+                              setAddQuestion(1);
                             }}>
                             Add Question
                           </Button>
@@ -70,62 +218,9 @@ const CreateGame: React.FC = () => {
                     {/* End Navbar */}
 
                     {/* Body Create game */}
-                    <Col
-                      lg="10"
-                      style={{ background: 'white' }}
-                      className="mb-4">
-                      {/* input question */}
-                      <Row className="justify-content-md-center mt-4">
-                        <Col lg="10">
-                          <div
-                            style={{
-                              border: '2px solid rgb(172,172,172)',
-                              backgroundColor: 'white',
-                            }}>
-                            <div
-                              id="inputQuestion"
-                              style={{
-                                float: 'right',
-                                marginRight: '30px',
-                              }}>
-                              120
-                            </div>
-                            <textarea
-                              id=""
-                              onChange={(e) => {
-                                e.preventDefault();
-                              }}
-                              placeholder="Click to start typing your question"
-                              maxLength={120}
-                              style={{
-                                border: 'none',
-                                padding: '5px 30px 5px 30px',
-                                width: '100%',
-                                height: '120px',
-                                resize: 'none',
-                                fontSize: '28px',
-                                textAlign: 'center',
-                              }}></textarea>
-                          </div>
-                        </Col>
-                      </Row>
-                      {/* Image question */}
-                      <div style={{ height: '200px' }} className="mt-2 mb-3">
-                        <div className="row">
-                          <div className="col align-self-start"></div>
-                          <div className="col align-self-center">
-                            <img src="http://placehold.it/300x200" alt="" />
-                          </div>
-                          <div className="col align-self-end"></div>
-                        </div>
-                      </div>
-                      {/* Answers */}
-                      <Answer numberAnswer="0"></Answer>
-                      <Answer numberAnswer="1"></Answer>
-                      <Answer numberAnswer="2"></Answer>
-                      <Answer numberAnswer="3"></Answer>
-                      <br />
-                    </Col>
+                    <BodyCreateGame
+                      data={data}
+                      selected={selected}></BodyCreateGame>
                   </Row>
                 </div>
               </CardBody>

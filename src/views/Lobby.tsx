@@ -64,7 +64,7 @@ const Lobby: React.FC = () => {
               </button>
             </div>
           </div>
-          <p className="waiting">Waiting for players</p>
+          <p className="waiting">Waitting for players</p>
           <img
             src={require('../assets/img/brand/image-kahoot.svg')}
             height="300px"
