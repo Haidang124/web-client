@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { Card, CardBody, CardHeader, Input } from 'reactstrap';
+import { Card, CardBody, CardHeader } from 'reactstrap';
 import { gameService } from '../services/game/api';
-import Modal_TrueFalse from './Modal_TrueFalse';
+import ModalTrueFalse from './ModalTrueFalse';
 const Discover: React.FC = () => {
   const [dataGame, setDataGame] = useState([
     {
@@ -35,7 +35,7 @@ const Discover: React.FC = () => {
     },
   ]);
   const [showDelete, setShowDelete] = useState(false);
-  const [id_game, setIdGame] = useState('');
+  const [idGame, setIdGame] = useState('');
   useEffect(() => {
     gameService.getAllGame().then((response) => {
       // Promise.resolve({
@@ -49,7 +49,7 @@ const Discover: React.FC = () => {
     });
   }, []);
   const getGame = async (_id) => {
-    if (_id == '') {
+    if (_id === '') {
       toast.error('EROOR!!!');
     }
     gameService
@@ -61,13 +61,13 @@ const Discover: React.FC = () => {
         toast.error(error.message());
       });
   };
-  const deleteGame = async (game_id) => {
-    if (game_id == '') {
+  const deleteGame = async (gameId) => {
+    if (gameId === '') {
       toast.error('EROOR!!!');
     }
-    console.log(game_id);
+    console.log(gameId);
     gameService
-      .deleteGame({ game_id: game_id })
+      .deleteGame({ gameId: gameId })
       .then((res) => {
         toast.success(res.data.message);
         window.location.reload();
@@ -79,7 +79,7 @@ const Discover: React.FC = () => {
   return (
     <>
       {/* Delete ? */}
-      <Modal_TrueFalse
+      <ModalTrueFalse
         show={showDelete}
         data={{
           title: 'Are you want delete?',
@@ -101,9 +101,9 @@ const Discover: React.FC = () => {
           console.log("Don't delete!");
         }}
         funcButton_2={() => {
-          deleteGame(id_game);
+          deleteGame(idGame);
         }}
-        funcOnHide={() => console.log('Hide Modal')}></Modal_TrueFalse>
+        funcOnHide={() => console.log('Hide Modal')}></ModalTrueFalse>
       <Card>
         <CardHeader>
           <div className="row d-flex justify-content-between">
@@ -132,7 +132,7 @@ const Discover: React.FC = () => {
                         width="100%"
                         height="150px"
                         className="card-img-top"
-                        src={value['resources']['image']['image']}
+                        src={value.resources.image.image}
                         alt=""
                       />
                       <div
@@ -143,42 +143,42 @@ const Discover: React.FC = () => {
                           borderBottom: '1px solid rgb(149,149,149)',
                         }}>
                         <h3 className="card-title text-center">
-                          {value['title']}
+                          {value.title}
                         </h3>
                         <p className="card-text">
-                          Số câu hỏi: {value['data']['array']['length']} <br />
+                          Số câu hỏi: {value.data.array.length} <br />
                           <span style={{ fontSize: '13px' }}>
                             <i>Created at: </i>
-                            {new Date(value['createdAt']).getDate() +
+                            {new Date(value.createdAt).getDate() +
                               '/' +
-                              new Date(value['createdAt']).getMonth() +
+                              new Date(value.createdAt).getMonth() +
                               '/' +
-                              new Date(value['createdAt']).getFullYear() +
+                              new Date(value.createdAt).getFullYear() +
                               '-' +
-                              new Date(value['createdAt']).getHours() +
+                              new Date(value.createdAt).getHours() +
                               ':' +
-                              new Date(value['createdAt']).getMinutes()}
+                              new Date(value.createdAt).getMinutes()}
                           </span>
                           <br />
                           <span style={{ fontSize: '13px' }}>
                             <i>Last updated:</i>
-                            {new Date(value['updatedAt']).getDate() +
+                            {new Date(value.updatedAt).getDate() +
                               '/' +
-                              new Date(value['updatedAt']).getMonth() +
+                              new Date(value.updatedAt).getMonth() +
                               '/' +
-                              new Date(value['updatedAt']).getFullYear() +
+                              new Date(value.updatedAt).getFullYear() +
                               '-' +
-                              new Date(value['updatedAt']).getHours() +
+                              new Date(value.updatedAt).getHours() +
                               ':' +
-                              new Date(value['updatedAt']).getMinutes()}
+                              new Date(value.updatedAt).getMinutes()}
                           </span>
                           <div className="row">
                             <div className="col-12 mt-3">
                               <a
-                                href="#"
+                                href="/"
                                 className="btn btn-success w-100"
-                                onClick={(e) => {
-                                  getGame(value['_id']);
+                                onClick={() => {
+                                  getGame(value._id);
                                 }}>
                                 Play game
                               </a>
@@ -187,18 +187,18 @@ const Discover: React.FC = () => {
                           <div className="row mt-2">
                             <div className="col-6">
                               <a
-                                href={'/admin/edit-game/' + value['_id']}
+                                href={'/admin/edit-game/' + value._id}
                                 className="btn btn-primary w-100">
                                 Edit
                               </a>
                             </div>
                             <div className="col-6">
                               <a
-                                href="#"
+                                href="/"
                                 className="btn btn-danger w-100"
                                 onClick={() => {
                                   setShowDelete(true);
-                                  setIdGame(value['_id']);
+                                  setIdGame(value._id);
                                 }}>
                                 Delete
                               </a>

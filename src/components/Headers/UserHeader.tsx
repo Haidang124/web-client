@@ -1,8 +1,6 @@
-import React, { ComponentType, useEffect, useState } from 'react';
-import { userService } from '../../services/user/api';
-
+import React from 'react';
 // reactstrap components
-import { Button, Col, Container, Row } from 'reactstrap';
+import { Col, Container, Row } from 'reactstrap';
 
 const UserHeader: React.FC<any> = (props: any) => {
   return (

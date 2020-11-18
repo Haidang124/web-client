@@ -1,6 +1,6 @@
-import React, { createRef, useRef, useState } from 'react';
+import React from 'react';
+import { FormControl, InputGroup, Modal } from 'react-bootstrap';
 import { Button, Col, Row } from 'reactstrap';
-import { FormControl, Modal, InputGroup } from 'react-bootstrap';
 import CardResult from './NewCard/CardResult.js';
 
 class QuestionBank extends React.Component {
