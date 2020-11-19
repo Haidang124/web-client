@@ -24,7 +24,7 @@ const App: React.FC = () => {
           <Route path="/codepin" component={CodePin} />
           <Route path="/ranking" component={Ranking} />
           <Route path="/playing-game" component={ChooseAnswer} />
-          <Route path="/lobby" component={Lobby} />
+          <Route path="/lobby/:id" component={Lobby} />
           {/* <Route path="/socketio" component={SocketioClient} /> */}
           <Route path="/loading" render={(props) => <Loading />} />
           <Redirect from="/" to="/admin/index" />

@@ -9,6 +9,7 @@ import GameUI from './views/GameUi';
 import Login from './views/Login';
 import Profile from './views/Profile';
 import Register from './views/Register';
+import WatchGame from './views/WatchGame';
 let routes = [
   {
     path: '/index',
@@ -19,22 +20,14 @@ let routes = [
   },
   {
     path: '/discover',
-    name: 'Discover Page',
+    name: 'My Kahoot',
     icon: 'ni ni-atom text-primary',
     component: Discover,
     layout: '/admin',
   },
-  
   {
     path: '/gameUi',
     name: 'Game',
-    icon: 'ni ni-controller text-primary',
-    component: GameUI,
-    layout: '/admin',
-  },
-  {
-    path: '/gameUi',
-    name: 'GameUi',
     icon: 'ni ni-controller text-primary',
     component: GameUI,
     layout: '/admin',
@@ -93,6 +86,20 @@ let routes = [
     name: 'Game',
     icon: 'ni ni-controller text-primary',
     component: Game,
+    layout: '/admin',
+  },
+  {
+    path: '/gameUi',
+    name: 'GameUi',
+    icon: 'ni ni-controller text-primary',
+    component: GameUI,
+    layout: '/admin',
+  },
+  {
+    path: '/watchGame/:id',
+    name: 'Watch Game',
+    icon: 'ni ni-controller text-primary',
+    component: WatchGame,
     layout: '/admin',
   },
 ];

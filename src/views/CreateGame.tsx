@@ -73,6 +73,9 @@ const CreateGame: React.FC = () => {
       if (lengthData > 1 && index !== -1) {
         data.splice(index, 1);
         setLengthData(data.length);
+        if (selected >= data.length) {
+          setSelected(data.length - 1);
+        }
         toast.success('Delete câu hỏi thành công!');
       } else {
         toast.error('Không thể xóa câu hỏi này!');
@@ -82,9 +85,13 @@ const CreateGame: React.FC = () => {
     }
   };
   const sendDataGame = (title, imageGame) => {
+    if (imageGame === '') {
+      imageGame =
+        'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/question-mark-icon-on-white-puzzle-royalty-free-image-917901148-1558452934.jpg';
+    }
     gameService
       .createGame({
-        game_name: title,
+        gameName: title,
         imageGame: imageGame,
         dataQuestion: data,
       })
