@@ -13,7 +13,7 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  Row
+  Row,
 } from 'reactstrap';
 import { userService } from '../services/user/api';
 
@@ -64,7 +64,7 @@ const Login: React.FC = () => {
                 onClick={(e) => e.preventDefault()}>
                 <span className="btn-inner--icon">
                   <img
-                    alt="..." 
+                    alt="..."
                     src={require('../assets/img/icons/common/google.svg')}
                   />
                 </span>

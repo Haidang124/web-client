@@ -31,7 +31,7 @@ const Game: React.FC = () => {
                   <Col lg="5" className="mt-6 mb-6 ml-6">
                     <Row className="mt-3">
                       <Col lg="9" className="center">
-                        <Link to="/admin/game">
+                        <Link to="/codepin">
                           <Button style={{ width: '25em', height: '25em' }}>
                             <svg
                               width="15em"
@@ -60,7 +60,7 @@ const Game: React.FC = () => {
                             fontWeight: 'bold',
                           }}
                           className="text-success">
-                          Play Game
+                          Play
                         </p>
                       </Col>
                     </Row>
@@ -92,11 +92,11 @@ const Game: React.FC = () => {
                         <p
                           style={{
                             textAlign: 'center',
-                            fontSize: '35px',
+                            fontSize: '30px',
                             fontWeight: 'bold',
                           }}
                           className="text-primary">
-                          Create Game
+                          Create Kahoot
                         </p>
                       </Col>
                     </Row>

@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useRouteMatch } from 'react-router';
 import '../assets/scss/component/lobby.scss';
 import socket from '../socketioClient';
 
 const Lobby: React.FC = () => {
   const [codepin, setCodepin] = useState(null);
   const [players, setPlayers] = useState([]);
+  const { params } = useRouteMatch();
+  // tslint:disable-next-line: no-string-literal
+  const gameId = params['id'];
   useEffect(() => {
     console.log(socket);
     socket.on('connect', function (data) {
@@ -26,10 +30,10 @@ const Lobby: React.FC = () => {
   };
   const startgame = () => {
     // window.location.href = 'game/123';
-    socket.emit('startGame', { pin: codepin });
+    socket.emit('startGame', { pin: codepin, gameId: gameId });
   };
   return (
-    <div className="lobby">
+    <div className="lobby" style={{ overflow: 'hidden' }}>
       <div>
         <div className="lobbystyles__RectangleShape-sc-1dkblab-1 kzvJek" />
         <div className="lobbystyles__CircleShape-sc-1dkblab-2 heWDjw" />

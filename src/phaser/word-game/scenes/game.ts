@@ -32,8 +32,8 @@ export class Game extends Phaser.Scene {
     this.gamedata = data.gameData;
   }
   preload(){
-    for(var i=0; i< this.gamedata.array.length; i++)  {
-      this.load.image('image'+i, this.gamedata.array[i].image);
+    for (let i = 0; i < this.gamedata.array.length; i++)  {
+      this.load.image('image' + i, this.gamedata.array[i].image);
     }
   }
   create() {
@@ -53,7 +53,7 @@ export class Game extends Phaser.Scene {
     });
     this.answer = this.gamedata.array[this.screenNumber].key;
     console.log(this.gamedata.array[this.screenNumber]);
-    this.add.image(1920 / 2, 320, 'image'+this.screenNumber).setDisplaySize(500, 460);
+    this.add.image(1920 / 2, 320, 'image' + this.screenNumber).setDisplaySize(500, 460);
     this.add
       .image(1600, 120, 'cup_ranking')
       .setScale(0.85)
