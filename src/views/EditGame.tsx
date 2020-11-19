@@ -35,8 +35,7 @@ const EditGame: React.FC = () => {
         // [{question; image, listAnswer['A','B','C','D'], time, key}]
         {
           question: '',
-          image:
-            'https://res.cloudinary.com/vnu-uet/image/upload/v1604428182/111_vx6tvo.jpg',
+          image: '',
           listAnswer: ['', '', '', ''],
           key: -1,
           time: 0,
@@ -47,8 +46,7 @@ const EditGame: React.FC = () => {
   const [data, setData] = useState([
     {
       question: '',
-      image:
-        'https://res.cloudinary.com/vnu-uet/image/upload/v1604428182/111_vx6tvo.jpg',
+      image: '',
       listAnswer: ['', '', '', ''],
       key: -1,
       time: 0,
@@ -236,8 +234,7 @@ const EditGame: React.FC = () => {
   const addQuestion = () => {
     let newData = {
       question: '',
-      image:
-        'https://res.cloudinary.com/vnu-uet/image/upload/v1604428182/111_vx6tvo.jpg',
+      image: '',
       listAnswer: ['', '', '', ''],
       key: -1,
       time: 5,
@@ -409,11 +406,21 @@ const EditGame: React.FC = () => {
                       </div>
 
                       <div className="col-6 mt-3">
-                        <Image
-                          src="http://placehold.it/450x250"
-                          id="image"
-                          className="image"
-                        />
+                        {data[selected].image ? (
+                          <img
+                            src={data[selected].image}
+                            alt="chosen"
+                            id="image"
+                            className="image"
+                            style={{ height: '250px', width: '450px' }}
+                          />
+                        ) : (
+                          <Image
+                            src="http://placehold.it/450x250"
+                            id="image"
+                            className="image"
+                          />
+                        )}
                       </div>
                       <div className="col-3"></div>
                     </div>
@@ -546,7 +553,7 @@ const EditGame: React.FC = () => {
                 <div className="col-2">
                   <button
                     type="button"
-                    className="btn btn btn-outline-dark"
+                    className="btn btn-dark"
                     id="quit_button"
                     onClick={() => setShowQuit(true)}>
                     Quit
@@ -555,7 +562,7 @@ const EditGame: React.FC = () => {
                 <div className="col-2">
                   <button
                     type="button"
-                    className="btn btn-outline-danger"
+                    className="btn btn-danger"
                     id="save_button"
                     onClick={() => setShowSave(true)}>
                     Save

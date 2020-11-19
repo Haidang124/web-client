@@ -125,10 +125,10 @@ const ChangePassword: React.FC = () => {
             <Card className="bg-secondary shadow">
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
-                  <Col xs="8">
+                  <Col>
                     <h3 className="mb-0">Password</h3>
                   </Col>
-                  <Col className="text-right" xs="4">
+                  <Col className="text-right">
                     <Button
                       disabled={trangThaiSave}
                       className="btn btn-danger"

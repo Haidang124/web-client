@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router';
+import { toast } from 'react-toastify';
 import '../assets/scss/component/lobby.scss';
+import { gameService } from '../services/game/api';
 import socket from '../socketioClient';
 
 const Lobby: React.FC = () => {
@@ -11,6 +13,7 @@ const Lobby: React.FC = () => {
   const gameId = params['id'];
   useEffect(() => {
     console.log(socket);
+    getGame(gameId);
     socket.on('connect', function (data) {
       socket.emit('host-join', { id: 1 });
     });
@@ -29,8 +32,24 @@ const Lobby: React.FC = () => {
     });
   };
   const startgame = () => {
-    // window.location.href = 'game/123';
     socket.emit('startGame', { pin: codepin, gameId: gameId });
+  };
+  const getGame = async (_id) => {
+    console.log('1212');
+    if (_id === '') {
+      toast.error('Không thấy GameId');
+    }
+    gameService
+      .getGameId(_id)
+      .then((res) => {
+        toast.success(res.data.data);
+      })
+      .catch((error) => {
+        toast.error('Không thấy GameId hợp lệ');
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 2000);
+      });
   };
   return (
     <div className="lobby" style={{ overflow: 'hidden' }}>
