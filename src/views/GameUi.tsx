@@ -31,11 +31,11 @@ const Game: React.FC = () => {
                   <Col lg="5" className="mt-6 mb-6 ml-6">
                     <Row className="mt-3">
                       <Col lg="9" className="center">
-                        <Link to="/codepin">
-                          <Button style={{ width: '25em', height: '25em' }}>
+                        <Link to="/admin/game">
+                          <Button style={{ width: '25rem', height: '25rem' }}>
                             <svg
-                              width="15em"
-                              height="15em"
+                              width="12rem"
+                              height="12rem"
                               viewBox="0 0 16 16"
                               className="bi bi-controller"
                               fill="currentColor"
@@ -56,7 +56,7 @@ const Game: React.FC = () => {
                         <p
                           style={{
                             textAlign: 'center',
-                            fontSize: '35px',
+                            fontSize: '32px',
                             fontWeight: 'bold',
                           }}
                           className="text-success">
@@ -69,10 +69,10 @@ const Game: React.FC = () => {
                     <Row className="mt-3">
                       <Col lg="9" className="center">
                         <Link to="/admin/create-game">
-                          <Button style={{ width: '25em', height: '25em' }}>
+                          <Button style={{ width: '25rem', height: '25rem' }}>
                             <svg
-                              width="15em"
-                              height="15em"
+                              width="12rem"
+                              height="12rem"
                               viewBox="0 0 16 16"
                               className="bi bi-pencil-square"
                               fill="currentColor"
@@ -92,7 +92,7 @@ const Game: React.FC = () => {
                         <p
                           style={{
                             textAlign: 'center',
-                            fontSize: '30px',
+                            fontSize: '32px',
                             fontWeight: 'bold',
                           }}
                           className="text-primary">

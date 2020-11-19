@@ -17,14 +17,14 @@ function createGame(data: any) {
 function getGameId(id: any) {
   return API.get(`${URL_PREFIX}/get-game-id?id=` + id);
 }
-function getGameName(game_name: any) {
-  return API.get(`${URL_PREFIX}/get-game-name?game_name=` + game_name);
+function getGameName(gameName: any) {
+  return API.get(`${URL_PREFIX}/get-game-name?gameName=` + gameName);
 }
 function getAllGame() {
   return API.get(`${URL_PREFIX}/get-all-game`);
 }
-function deleteGame(game_id: any) {
-  return API.post(`${URL_PREFIX}/deleteGame`, game_id);
+function deleteGame(gameId: any) {
+  return API.post(`${URL_PREFIX}/deleteGame`, gameId);
 }
 function updateGame(data: any) {
   return API.post(`${URL_PREFIX}/updateGame`, data);

@@ -27,7 +27,7 @@ let routes = [
   },
   {
     path: '/gameUi',
-    name: 'Game',
+    name: 'Play Game',
     icon: 'ni ni-controller text-primary',
     component: GameUI,
     layout: '/admin',

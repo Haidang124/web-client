@@ -16,20 +16,27 @@ import '../assets/css/createGame.css';
 import { ListQuestion } from '../components/CreateGame/ListQuestion';
 import QuestionBank from '../components/QuestionBank.js';
 import { gameService } from '../services/game/api';
+import { uploadService } from '../services/upload/api';
 import Modal_Save from './ModalSave';
 import Modal_TrueFalse from './ModalTrueFalse';
 const CreateGame: React.FC = () => {
   const [data] = useState([
-    // [{question; image, listAnswer['A','B','C','D'], time, key}]
     {
       question: '',
-      image:
-        'https://res.cloudinary.com/vnu-uet/image/upload/v1604428182/111_vx6tvo.jpg',
+      image: '',
       listAnswer: ['', '', '', ''],
       key: -1,
       time: 5,
     },
   ]);
+  const fileUploadButton = () => {
+    document.getElementById('file-avatar').click();
+    document.getElementById('file-avatar').onchange = (e) => {
+      handleFileInputChange(e);
+    };
+  };
+  // upload file
+  const [previewSource, setPreviewSource] = useState('');
   const [selected, setSelected] = useState(0);
   const [lengthData, setLengthData] = useState(data.length);
   const [showDelete, setShowDelete] = useState(false);
@@ -42,6 +49,48 @@ const CreateGame: React.FC = () => {
     answer_2: 'rgb(216,158,0)',
     answer_3: 'rgb(38,137,12)',
   });
+
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
+
+    previewFile(file);
+    handleSubmitFile(file);
+  };
+
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result as any);
+    };
+  };
+
+  const handleSubmitFile = (file) => {
+    // e.preventDefault();
+    if (!file) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      uploadImage(reader.result);
+    };
+    reader.onerror = () => {
+      console.error('Lỗi image!!');
+    };
+  };
+  const uploadImage = async (base64EncodedImage) => {
+    uploadService
+      .uploadFile({ data: base64EncodedImage })
+      .then((res) => {
+        data[selected].image = res.data.data.uploadResponse.url;
+        toast.success('Upload image success');
+      })
+      .catch((error) => toast.success(error));
+  };
+
+  //
+
   useEffect(() => {
     (document.getElementById('question') as HTMLInputElement).value =
       data[selected].question;
@@ -68,6 +117,10 @@ const CreateGame: React.FC = () => {
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(() => {
+    setPreviewSource(data[selected].image);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected]);
   const removeQuestion = (index) => {
     try {
       if (lengthData > 1 && index !== -1) {
@@ -190,8 +243,7 @@ const CreateGame: React.FC = () => {
   const addQuestion = () => {
     let newData = {
       question: '',
-      image:
-        'https://res.cloudinary.com/vnu-uet/image/upload/v1604428182/111_vx6tvo.jpg',
+      image: '',
       listAnswer: ['', '', '', ''],
       key: -1,
       time: 5,
@@ -272,7 +324,7 @@ const CreateGame: React.FC = () => {
             <CardHeader className="bg-white border-0">
               <Row className="align-items-center">
                 <Col xs="11">
-                  <h3 className="mb-0">"New Kahoot"</h3>
+                  <h3 className="mb-0">Create Kahoot</h3>
                 </Col>
               </Row>
             </CardHeader>
@@ -358,13 +410,35 @@ const CreateGame: React.FC = () => {
                       </div>
 
                       <div className="col-6 mt-3">
-                        <Image
-                          src="http://placehold.it/450x250"
-                          id="image"
-                          className="image"
-                        />
+                        {previewSource !== '' ? (
+                          <img
+                            src={previewSource}
+                            alt="chosen"
+                            style={{ height: '250px', width: '450px' }}
+                          />
+                        ) : (
+                          <Image
+                            src="http://placehold.it/450x250"
+                            id="image"
+                            className="image"
+                          />
+                        )}
                       </div>
-                      <div className="col-3"></div>
+                      <div className="col-3 upload-photo">
+                        <div className="update ml-auto mr-auto">
+                          <input
+                            type="file"
+                            id="file-avatar"
+                            style={{ display: 'none' }}
+                          />
+                          <Button color="primary" onClick={fileUploadButton}>
+                            <i
+                              className="fa fa-upload mr-3"
+                              aria-hidden="true"></i>
+                            Upload
+                          </Button>
+                        </div>
+                      </div>
                     </div>
                     <div className="row d-flex justify-content-center">
                       <div className="col-12 mt-4">
@@ -491,20 +565,20 @@ const CreateGame: React.FC = () => {
               </div>
             </CardBody>
             <CardFooter>
-              <div className="row d-flex justify-content-between">
-                <div className="col-2">
+              <div className="row d-flex justify-content-end">
+                <div className="">
                   <button
                     type="button"
-                    className="btn btn btn-outline-dark"
+                    className="btn btn btn-info h-100"
                     id="quit_button"
                     onClick={() => setShowQuit(true)}>
-                    Quit
+                    Close
                   </button>
                 </div>
                 <div className="col-2">
                   <button
                     type="button"
-                    className="btn btn-outline-danger"
+                    className="btn btn-danger"
                     id="save_button"
                     onClick={() => setShowSave(true)}>
                     Save

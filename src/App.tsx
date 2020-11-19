@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Loading from './components/Loading/Loading';
 import AdminLayout from './layouts/Admin';
 import AuthLayout from './layouts/Auth';
+import Upload from './Upload/Upload';
 import ChooseAnswer from './views/ChooseAnswer';
 import CodePin from './views/CodePin';
 import Game from './views/Game';
@@ -22,6 +23,7 @@ const App: React.FC = () => {
           <Route path="/game/:gameId" component={GameDetail} />
           <Route path="/game" component={Game} />
           <Route path="/codepin" component={CodePin} />
+          <Route path="/upload" component={Upload} />
           <Route path="/ranking" component={Ranking} />
           <Route path="/playing-game" component={ChooseAnswer} />
           <Route path="/lobby/:id" component={Lobby} />
