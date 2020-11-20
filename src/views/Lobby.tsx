@@ -14,8 +14,8 @@ const Lobby: React.FC = () => {
   useEffect(() => {
     console.log(socket);
     getGame(gameId);
-    socket.on('connect', function (data) {
-      socket.emit('host-join', { id: 1 });
+    socket.on('connect', function () {
+      socket.emit('host-join');
     });
     socket.on('showGamePin', function (data) {
       setCodepin(data.pin);
@@ -23,19 +23,24 @@ const Lobby: React.FC = () => {
     socket.on('redirect', function (data) {
       window.location.href = data.redirect;
     });
+    socket.on('player-disconnect', (data) => {
+      data.players.splice(0, 1);
+      setPlayers(data.players);
+      toast.error(data.playerDis + ' đã thoát khỏi phòng!');
+    });
     getPlayers();
   }, []);
   const getPlayers = () => {
     socket.on('player-lobby', (data) => {
       data.players.splice(0, 1);
       setPlayers(data.players);
+      toast.success(data.playerJoin + ' đã vào phòng!');
     });
   };
   const startgame = () => {
     socket.emit('startGame', { pin: codepin, gameId: gameId });
   };
   const getGame = async (_id) => {
-    console.log('1212');
     if (_id === '') {
       toast.error('Không thấy GameId');
     }
@@ -50,6 +55,13 @@ const Lobby: React.FC = () => {
           window.location.href = '/';
         }, 2000);
       });
+  };
+  const removePlayer = (key) => {
+    socket.emit('kick-player-request', key + 1);
+    socket.on('refreshPlayer', (data) => {
+      data.players.splice(0, 1);
+      setPlayers(data.players);
+    });
   };
   return (
     <div className="lobby" style={{ overflow: 'hidden' }}>
@@ -73,9 +85,17 @@ const Lobby: React.FC = () => {
                 width="200px"
               />
               {players.map((player, key) => (
-                <p key="index" className="list-username">
-                  {player}
-                </p>
+                <>
+                  <div className="btn">
+                    <p
+                      key="index"
+                      className="list-username"
+                      id={String(key)}
+                      onClick={() => removePlayer(key)}>
+                      {player}
+                    </p>
+                  </div>
+                </>
               ))}
             </div>
             <div className="col-2 d-flex flex-column">

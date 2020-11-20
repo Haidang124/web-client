@@ -39,6 +39,7 @@ export class Game extends Phaser.Scene {
   create() {
     console.log(socket);
     socket.emit('change-hostId', { hostId: socket.id });
+    socket.emit("current-length-game", {currentGame: this.screenNumber + 1, lengthGame: this.gamedata.array.length});
     socket.on('anwser-to-host', (data) => {
       this.myAnswer = data.answer;
       this.answerForAbc[data.answer - 1]++;
@@ -115,6 +116,7 @@ export class Game extends Phaser.Scene {
       key: 'stopwatchClicked',
       time: this.gamedata.array[this.screenNumber].time,
       clockSound: this.clocksound,
+      functionStop: (() => {console.log("Stop question"); }),
     });
   }
   randomColor(sum) {

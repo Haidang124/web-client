@@ -16,6 +16,7 @@ import '../assets/css/createGame.css';
 import { ListQuestion } from '../components/CreateGame/ListQuestion';
 import QuestionBank from '../components/QuestionBank.js';
 import { gameService } from '../services/game/api';
+import { uploadService } from '../services/upload/api';
 import ModalSave from './ModalSave';
 import ModalTrueFalse from './ModalTrueFalse';
 // fix lai cai lôi do toi xoa nham truong di . Hom sau dat ten cho chuan , Họac sang sua ben serve ây
@@ -52,6 +53,14 @@ const EditGame: React.FC = () => {
       time: 0,
     },
   ]);
+  const fileUploadButton = () => {
+    document.getElementById('file-avatar').click();
+    document.getElementById('file-avatar').onchange = (e) => {
+      handleFileInputChange(e);
+    };
+  };
+  // upload file
+  const [previewSource, setPreviewSource] = useState('');
   const [selected, setSelected] = useState(0);
   const [lengthData, setLengthData] = useState(data.length);
   const [showDelete, setShowDelete] = useState(false);
@@ -64,10 +73,53 @@ const EditGame: React.FC = () => {
     answer_2: 'rgb(216,158,0)',
     answer_3: 'rgb(38,137,12)',
   });
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
+
+    previewFile(file);
+    handleSubmitFile(file);
+  };
+
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result as any);
+    };
+  };
+
+  const handleSubmitFile = (file) => {
+    // e.preventDefault();
+    if (!file) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      uploadImage(reader.result);
+    };
+    reader.onerror = () => {
+      console.error('Lỗi image!!');
+    };
+  };
+  const uploadImage = async (base64EncodedImage) => {
+    uploadService
+      .uploadFile({ data: base64EncodedImage })
+      .then((res) => {
+        data[selected].image = res.data.data.uploadResponse.url;
+        console.log(data[selected].image);
+        toast.success('Upload image success');
+      })
+      .catch((error) => toast.success(error));
+  };
   useEffect(() => {
     getDataGame();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(() => {
+    setPreviewSource(data[selected].image);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected]);
   const getDataGame = () => {
     gameService
       .getGameId(gameId)
@@ -276,7 +328,7 @@ const EditGame: React.FC = () => {
         show={showQuit}
         data={{
           title:
-            'Hold on - are you sure you want to discard all unsaved changes? You won’t be able to restore these changes.?',
+            'Are you sure you want to discard all unsaved changes? \nYou won’t be able to restore these changes.?',
           button_1: {
             title: 'No',
             backgroundColor: 'rgb(242,242,242)',
@@ -293,7 +345,7 @@ const EditGame: React.FC = () => {
         }}
         funcButton_1={() => console.log("Don't quit")}
         funcButton_2={() => {
-          window.location.href = '/admin/index';
+          window.location.href = '/admin/discover';
         }}
         funcOnHide={() => console.log('Hide Modal')}></ModalTrueFalse>
       {/* Save Game */}
@@ -406,12 +458,10 @@ const EditGame: React.FC = () => {
                       </div>
 
                       <div className="col-6 mt-3">
-                        {data[selected].image ? (
+                        {previewSource !== '' ? (
                           <img
-                            src={data[selected].image}
+                            src={previewSource}
                             alt="chosen"
-                            id="image"
-                            className="image"
                             style={{ height: '250px', width: '450px' }}
                           />
                         ) : (
@@ -422,7 +472,21 @@ const EditGame: React.FC = () => {
                           />
                         )}
                       </div>
-                      <div className="col-3"></div>
+                      <div className="col-3 upload-photo">
+                        <div className="update ml-auto mr-auto">
+                          <input
+                            type="file"
+                            id="file-avatar"
+                            style={{ display: 'none' }}
+                          />
+                          <Button color="primary" onClick={fileUploadButton}>
+                            <i
+                              className="fa fa-upload mr-3"
+                              aria-hidden="true"></i>
+                            Upload
+                          </Button>
+                        </div>
+                      </div>
                     </div>
                     <div className="row d-flex justify-content-center">
                       <div className="col-12 mt-4">

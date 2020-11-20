@@ -92,7 +92,7 @@ const Game: React.FC = () => {
                         <p
                           style={{
                             textAlign: 'center',
-                            fontSize: '32px',
+                            fontSize: '31px',
                             fontWeight: 'bold',
                           }}
                           className="text-primary">
