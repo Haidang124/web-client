@@ -31,7 +31,11 @@ export class Game extends Phaser.Scene {
   init(data) {
     this.gamedata = data.gameData;
   }
-
+  preload(){
+    for (let i = 0; i < this.gamedata.array.length; i++)  {
+      this.load.image('image' + i, this.gamedata.array[i].image);
+    }
+  }
   create() {
     console.log(socket);
     socket.emit('change-hostId', { hostId: socket.id });
@@ -48,7 +52,8 @@ export class Game extends Phaser.Scene {
       this.numberCorrect = new Array(this.numberPlayer).fill(0);
     });
     this.answer = this.gamedata.array[this.screenNumber].key;
-    this.add.image(1920 / 2, 320, 'image').setDisplaySize(500, 460);
+    console.log(this.gamedata.array[this.screenNumber]);
+    this.add.image(1920 / 2, 320, 'image' + this.screenNumber).setDisplaySize(500, 460);
     this.add
       .image(1600, 120, 'cup_ranking')
       .setScale(0.85)

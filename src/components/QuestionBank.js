@@ -1,6 +1,6 @@
-import React, { createRef, useRef, useState } from 'react';
+import React from 'react';
+import { FormControl, InputGroup, Modal } from 'react-bootstrap';
 import { Button, Col, Row } from 'reactstrap';
-import { FormControl, Modal, InputGroup } from 'react-bootstrap';
 import CardResult from './NewCard/CardResult.js';
 
 class QuestionBank extends React.Component {
@@ -17,6 +17,7 @@ class QuestionBank extends React.Component {
         : 'Button Modal',
       widthButton: this.props.widthButton ? this.props.widthButton : '5rem',
       heightButton: this.props.heightButton ? this.props.heightButton : '3rem',
+      data: props.data,
     };
   }
   handleClose = () => this.setState({ show: false });
@@ -24,8 +25,7 @@ class QuestionBank extends React.Component {
   fun_question_search = (e) => {
     // (document.getElementById('question_search') as HTMLInputElement).value = '';
     document.getElementById('question_search').value = '';
-
-    console.log('ABC');
+    console.log(this.state.data);
   };
 
   render() {
@@ -33,7 +33,10 @@ class QuestionBank extends React.Component {
       <>
         <Button
           variant="primary"
-          onClick={() => this.handleShow()}
+          onClick={() => {
+            this.handleShow();
+            this.props.refreshData(this);
+          }}
           style={{
             background: this.state.colorButton,
             color: this.state.colorText,
@@ -109,22 +112,18 @@ class QuestionBank extends React.Component {
               {/* End Search result */}
 
               {/* Các đáp án */}
-              <CardResult
-                title="Câu hỏi 1"
-                contents={['Đáp án 1', 'Đáp án 2', 'Đáp án 3', 'Đáp án 4']}
-                result={3}
-                imageURL="https://www.thewowstyle.com/wp-content/uploads/2015/02/Beautiful-Wallpapers-14.jpg"></CardResult>
-              <CardResult
-                title="Câu hỏi 2"
-                contents={['Đáp án 1', 'Đáp án 2', 'Đáp án 3', 'Đáp án 4']}
-                result={1}
-                imageURL="https://www.thewowstyle.com/wp-content/uploads/2015/02/Beautiful-Wallpapers-14.jpg"></CardResult>
-              <CardResult
-                title="Câu hỏi 3"
-                contents={['Đáp án 1', 'Đáp án 2', 'Đáp án 3', 'Đáp án 4']}
-                result={3}
-                imageURL="https://www.thewowstyle.com/wp-content/uploads/2015/02/Beautiful-Wallpapers-14.jpg"></CardResult>
-              {/* Kết thúc các đáp án */}
+              {this.state.data.map((value, key) => {
+                return (
+                  <>
+                    <CardResult
+                      title={value['question']}
+                      contents={value['listAnswer']}
+                      time={value['time']}
+                      result={value['key']}
+                      imageURL={value['image']}></CardResult>
+                  </>
+                );
+              })}
             </Row>
           </Modal.Body>
           <Modal.Footer>

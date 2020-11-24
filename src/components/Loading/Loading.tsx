@@ -1,6 +1,6 @@
 import React from 'react';
-import { Section } from '../../utils/help';
 import ReactLoading from 'react-loading';
+import { Section } from '../../utils/help';
 
 const Loading: React.FC = () => (
   <Section>

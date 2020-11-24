@@ -3,11 +3,13 @@ import Blog from './views/Blog';
 import ChangePassword from './views/ChangePassword';
 import CreateGame from './views/CreateGame';
 import Discover from './views/Discover';
+import EditGame from './views/EditGame';
 import Game from './views/Game';
 import GameUI from './views/GameUi';
 import Login from './views/Login';
 import Profile from './views/Profile';
 import Register from './views/Register';
+import WatchGame from './views/WatchGame';
 let routes = [
   {
     path: '/index',
@@ -18,21 +20,14 @@ let routes = [
   },
   {
     path: '/discover',
-    name: 'Discover Page',
+    name: 'My Kahoot',
     icon: 'ni ni-atom text-primary',
     component: Discover,
     layout: '/admin',
   },
   {
-    path: '/game',
-    name: 'Game',
-    icon: 'ni ni-controller text-primary',
-    component: Game,
-    layout: '/admin',
-  },
-  {
     path: '/gameUi',
-    name: 'GameUi',
+    name: 'Play Game',
     icon: 'ni ni-controller text-primary',
     component: GameUI,
     layout: '/admin',
@@ -77,6 +72,34 @@ let routes = [
     name: 'Blog',
     icon: 'ni ni-controller text-primary',
     component: Blog,
+    layout: '/admin',
+  },
+  {
+    path: '/edit-game/:id',
+    name: 'Edit Game',
+    icon: 'ni ni-controller text-primary',
+    component: EditGame,
+    layout: '/admin',
+  },
+  {
+    path: '/game',
+    name: 'Game',
+    icon: 'ni ni-controller text-primary',
+    component: Game,
+    layout: '/admin',
+  },
+  {
+    path: '/gameUi',
+    name: 'GameUi',
+    icon: 'ni ni-controller text-primary',
+    component: GameUI,
+    layout: '/admin',
+  },
+  {
+    path: '/watchGame/:id',
+    name: 'Watch Game',
+    icon: 'ni ni-controller text-primary',
+    component: WatchGame,
     layout: '/admin',
   },
 ];

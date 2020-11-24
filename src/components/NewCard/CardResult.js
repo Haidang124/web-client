@@ -27,7 +27,7 @@ class CardResult extends React.Component {
       <>
         <Card
           style={{ width: '50rem', background: 'rgb(225,224,226)' }}
-          className="mt-3">
+          className="mt-2">
           <CardHeader>
             <Row>
               <Col className="col-10">
@@ -40,7 +40,10 @@ class CardResult extends React.Component {
                     />
                   </Col>
                   <Col className="col-5">
-                    <h3 className="card-title mt-4">{this.state.title}</h3>
+                    <h4 className="card-title mt-4">{this.state.title}</h4>
+                    <p className="mt--1" style={{ fontSize: '13px' }}>
+                      Time: {this.props.time}s
+                    </p>
                   </Col>
                 </Row>
               </Col>

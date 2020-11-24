@@ -100,7 +100,7 @@ const Header: React.FC = () => {
                           borderRadius: '6px',
                           border: '1px dashed rgb(208,208,208)',
                         }}>
-                        <p className="text-muted text-center">
+                        <p className="text-muted text-center p-3">
                           Find fun learning games to play independently and
                           challenge friends to beat your score.
                         </p>
@@ -333,7 +333,7 @@ const Header: React.FC = () => {
                           borderRadius: '6px',
                           border: '1px dashed rgb(208,208,208)',
                         }}>
-                        <p className="text-muted text-center">
+                        <p className="text-muted text-center p-3">
                           Find fun learning games to play independently and
                           challenge friends to beat your score.
                         </p>

@@ -54,8 +54,7 @@ const Auth: React.FC<RouteComponentProps> = () => {
             <div className="header-body text-center mb-7">
               <Row className="justify-content-center">
                 <Col lg="5" md="6">
-                  <h1 className="text-white">Welcome!</h1>
-                  <p className="text-lead text-light">Hello Luu Hai Dang</p>
+                  <h1 className="text-white">Welcome !</h1>
                 </Col>
               </Row>
             </div>
