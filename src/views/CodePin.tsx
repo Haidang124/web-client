@@ -26,6 +26,16 @@ const CodePin: React.FC = () => {
     socket.on('redirect', function (data) {
       window.location.href = data.redirect;
     });
+    socket.on('host-disconnect', function () {
+      toast.error('Host đã thoát!');
+      window.location.reload();
+    });
+    socket.on('kick', function () {
+      toast.error('Bạn đã bị chủ phòng kick!');
+    });
+    socket.on('kick-player-response', (codePin) => {
+      socket.emit('kick-player-out-room', codePin);
+    });
   }, []);
   return (
     <div className="codepin">

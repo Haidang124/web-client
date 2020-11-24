@@ -14,7 +14,7 @@ const ModalTrueFalse: React.FC<any> = (props: any) => {
         scrollable
         centered>
         <Modal.Header closeButton>
-          <Modal.Title>{props.data.title}</Modal.Title>
+          <Modal.Title className="text-center">{props.data.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="row d-flex justify-content-center">

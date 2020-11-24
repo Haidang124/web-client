@@ -38,9 +38,15 @@ const ModalSave: React.FC<any> = (props: any) => {
                 style={{ fontSize: '17px' }}
                 defaultValue={props.imageGame}
                 onChange={(e) => {
-                  (document.getElementById(
-                    'imageGame',
-                  ) as HTMLInputElement).src = e.target.value;
+                  if (e.target.value === '') {
+                    (document.getElementById(
+                      'imageGame',
+                    ) as HTMLInputElement).src = 'http://placehold.it/500x300';
+                  } else {
+                    (document.getElementById(
+                      'imageGame',
+                    ) as HTMLInputElement).src = e.target.value;
+                  }
                 }}></Input>
               <div className="d-flex justify-content-center w-100 mt-2">
                 <img

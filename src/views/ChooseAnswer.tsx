@@ -4,6 +4,8 @@ import socket from '../socketioClient';
 
 const ChooseAnswer: React.FC = () => {
   const [answer, setAnswer] = useState(null);
+  const [currentGame, setCurrentGame] = useState(0);
+  const [lengthGame, setLengthGame] = useState(0);
   useEffect(() => {
     if (sessionStorage.getItem('codePin')) {
       console.log('sdsdsd');
@@ -12,6 +14,10 @@ const ChooseAnswer: React.FC = () => {
         username: sessionStorage.getItem('username'),
       });
     }
+    socket.on('get-current-length-game', (data) => {
+      setCurrentGame(data.currentGame);
+      setLengthGame(data.lengthGame);
+    });
   }, []);
   useEffect(() => {
     console.log(socket);
@@ -28,7 +34,9 @@ const ChooseAnswer: React.FC = () => {
         <div className="navbar-choose-answer">
           <div className="left-navbar">
             <div className="pin">PIN: 8586136</div>
-            <div className="number-question">1 of 12</div>
+            <div className="number-question">
+              {currentGame} of {lengthGame}
+            </div>
           </div>
           <div className="right-navbar">
             <div className="nickname">123</div>

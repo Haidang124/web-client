@@ -7,6 +7,8 @@ export class ClockContainer extends ButtonCircle {
   timedEvent: Phaser.Time.TimerEvent;
   isFocused: boolean;
   clockSound: Phaser.Sound.BaseSound;
+  functionStop: any;
+  runFunctionStop: any;
 
   constructor(params: any) {
     super(params);
@@ -29,17 +31,23 @@ export class ClockContainer extends ButtonCircle {
       callbackScope: this,
       loop: true,
     });
-
     this.add(this.timer);
     this.scene.add.existing(this);
+    this.functionStop = this.functionStop ? this.functionStop : () => { console.log("abc"); };
+    this.runFunctionStop = false;
   }
 
   public switchButton(): void {
     this.isFocused = !this.isFocused;
+    this.runFunctionStop = false;
   }
 
   public stop(): void {
     this.isFocused = false;
+    if (this.runFunctionStop === false) {
+      this.functionStop();
+      this.runFunctionStop = true;
+    }
   }
 
   private handleTimeEvent(): void {
