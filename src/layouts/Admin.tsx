@@ -1,7 +1,6 @@
 import React, { ComponentType, useEffect, useState } from 'react';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
-// import AdminFooter from '../components/Footers/AdminFooter';
 import AdminNavbar from '../components/Navbars/AdminNavbar';
 import Sidebar from '../components/Sidebar/Sidebar';
 import routes from '../routes';
@@ -51,7 +50,7 @@ const Admin: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
   };
   //
   const checkMainContent = (name) => {
-    const arrayList = ['Home Page', 'User Profile', 'Change Password', 'Blog'];
+    const arrayList = ['Home Page', 'Change Password', 'Blog', 'Courses'];
     for (let i = 0; i < arrayList.length; i++) {
       if (name === arrayList[i]) {
         return true;
@@ -87,6 +86,7 @@ const Admin: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
             return <></>;
           }
         })()}
+        {/* <MyNav /> */}
         {/* <AdminNavbar
           {...props}
           brandText={getBrandText(props.location.pathname)}
