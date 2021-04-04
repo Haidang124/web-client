@@ -8,6 +8,7 @@ import AuthLayout from './layouts/Auth';
 import Upload from './Upload/Upload';
 import ChooseAnswer from './views/ChooseAnswer';
 import CodePin from './views/CodePin';
+import Friend from './views/Friend';
 import Game from './views/Game';
 import GameDetail from './views/GameDetail';
 import Lobby from './views/Lobby';
@@ -23,6 +24,7 @@ const App: React.FC = () => {
           <Route path="/game/:gameId" component={GameDetail} />
           <Route path="/game" component={Game} />
           <Route path="/codepin" component={CodePin} />
+          <Route path="/friend" component={Friend} />
           <Route path="/upload" component={Upload} />
           <Route path="/ranking" component={Ranking} />
           <Route path="/playing-game" component={ChooseAnswer} />

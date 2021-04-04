@@ -1,24 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { userService } from '../../services/user/api';
-
 // reactstrap components
 import {
   Container,
+  Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
-  Form,
-  FormGroup,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
   Media,
   Nav,
   Navbar,
   UncontrolledDropdown,
 } from 'reactstrap';
+import { userService } from '../../services/user/api';
 
 const AdminNavbar: React.FC<any> = (props: any) => {
   const [dataUser, setDataUser] = useState({
@@ -47,7 +41,23 @@ const AdminNavbar: React.FC<any> = (props: any) => {
             to="/">
             {props.brandText}
           </Link>
-          <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+          <form className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div className="input-group" style={{ border: 'none' }}>
+              <input
+                type="text"
+                className="form-control bg-light border-0 small"
+                placeholder="Search for..."
+                aria-label="Search"
+                aria-describedby="basic-addon2"
+              />
+              <div className="input-group-append">
+                <button className="btn btn-primary" type="button">
+                  <i className="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+          {/* <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
             <FormGroup className="mb-0">
               <InputGroup className="input-group-alternative">
                 <InputGroupAddon addonType="prepend">
@@ -58,8 +68,26 @@ const AdminNavbar: React.FC<any> = (props: any) => {
                 <Input placeholder="Search" type="text" />
               </InputGroup>
             </FormGroup>
-          </Form>
+          </Form> */}
           <Nav className="align-items-center d-none d-md-flex" navbar>
+            <Dropdown isOpen={false}>
+              <DropdownToggle tag="a" className="nav-link" caret>
+                <i className="fas fa-bell fa-fw"></i>
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem header>Header</DropdownItem>
+                <DropdownItem>Some Action</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+            <Dropdown isOpen={false}>
+              <DropdownToggle tag="a" className="nav-link" caret>
+                <i className="fas fa-envelope fa-fw"></i>
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem header>Header</DropdownItem>
+                <DropdownItem>Some Action</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
             <UncontrolledDropdown nav>
               <DropdownToggle className="pr-0" nav>
                 <Media className="align-items-center">
